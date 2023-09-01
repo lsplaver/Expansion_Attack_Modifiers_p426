@@ -2,6 +2,6 @@
 {
     public enum OptionalExpansions
     {
-        NONE, ITEMS, GEAR, STOLEN_INVENTORY, VIN_FLETCHER
+        NONE, ITEMS, GEAR, STOLEN_INVENTORY, VIN_FLETCHER, ATTACK_MODIFIERS
     }
 }

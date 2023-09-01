@@ -1,4 +1,5 @@
-﻿using Expansion_Attack_Modifiers_p426.Expansions.Gear;
+﻿using Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers;
+using Expansion_Attack_Modifiers_p426.Expansions.Gear;
 using Expansion_Attack_Modifiers_p426.Expansions.Items;
 using Expansion_Attack_Modifiers_p426.Expansions.Vin_Fletcher;
 
@@ -31,6 +32,7 @@ namespace Expansion_Attack_Modifiers_p426
         public List<PartyGearInventoryHitChance> MonstersPartyGearInventoryHitChances { get; set; }
         public CharacterGearInventoryHitChance CurrentCharacterGearInventoryHitChance { get; set; }
         public PartyGearInventoryHitChance CurrentPartyGearInventoryHitChance { get; set; }
+        public CharacterAttackModifier CurrentCharacterAttackModifier { get; set; }
 
         public Battle(Party heroes, List<Party> monsters, Character currentCharacter, PartyType currentPartyType, List<Player> players, Player currentPlayer, Party currentParty, string expansions)
         {
