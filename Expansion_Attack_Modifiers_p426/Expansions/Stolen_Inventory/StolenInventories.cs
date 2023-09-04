@@ -1,4 +1,5 @@
 ﻿using Expansion_Attack_Modifiers_p426;
+using Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers;
 using Expansion_Attack_Modifiers_p426.Expansions.Gear;
 using Expansion_Attack_Modifiers_p426.Expansions.Items;
 using Expansion_Attack_Modifiers_p426.Expansions.Vin_Fletcher;
@@ -159,6 +160,21 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Stolen_Inventory
                     }
                     targetParty.Inventory.WeaponHitChances.Clear();
                 }
+            }
+        }
+
+        // method to steal the inventory from defeated party
+        // items, stolen inventory and attack modifier expansions
+        public void StolenInventory(Battle battle, PartyAttackModifierItemInventory targetParty, PartyAttackModifierItemInventory currentParty)
+        {
+            if (targetParty.Inventory.Potions.Count > 0)
+            {
+                for (int i = 0; i < targetParty.Inventory.Potions.Count; i++)
+                {
+                    currentParty.Inventory.Potions.Add(targetParty.Inventory.Potions[i]);
+                    Console.WriteLine($"The {currentParty.Name} have stolen {targetParty.Inventory.Potions[i].Name} from {targetParty.Name}");
+                }
+                targetParty.Inventory.Potions.Clear();
             }
         }
     }

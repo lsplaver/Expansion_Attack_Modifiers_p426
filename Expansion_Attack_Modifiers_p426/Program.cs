@@ -1512,6 +1512,7 @@ namespace Expansion_Attack_Modifiers_p426
                 // items and attack modifiers expansion
                 case "015":
                 // items, stolen inventory and attack modifier expansions
+                case "0135":
                     {
                         unCodedOneCharacterActionTypes = AddHeal10Action(2, unCodedOneCharacterActionTypes);
                         CharacterAttackModifier unCodedOne = new CharacterAttackModifier("THE UNCODED ONE", unCodedOneCharacterActionTypes, 15, "unCodedOne", attackModifiersOffensive, attackModifiersDefensive);

@@ -15,7 +15,7 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Items.Actions
                 // items and attack modifiers expansions
                 case "015":
                 // items, stolen inventory and attack modifiers expansions
-                case "013":
+                case "0135":
                     {
                         for (int i = 0; i < currentCharacter.AvailableActions.Count; i++)
                         {
