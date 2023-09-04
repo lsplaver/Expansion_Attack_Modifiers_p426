@@ -12,9 +12,9 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Items.Actions
             int totalHealing = 0;
             switch (strExpansions)
             {
-                // items expansion
-                case "01":
-                // items and stolen inventory expansions
+                // items and attack modifiers expansions
+                case "015":
+                // items, stolen inventory and attack modifiers expansions
                 case "013":
                     {
                         for (int i = 0; i < currentCharacter.AvailableActions.Count; i++)
@@ -37,14 +37,14 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Items.Actions
                         Console.WriteLine($"{currentCharacter.Name} used {healingName} on {targetCharacter.Name}.");
                         Console.WriteLine($"{healingName} heals {totalHealing} to {targetCharacter.Name}.");
                         targetCharacter.CurrentHP = targetCharacter.CurrentHP + totalHealing;
-                        if (targetCharacter.MaxHP > 0)
+                        if (targetCharacter.CurrentHP > targetCharacter.MaxHP)
                         {
                             targetCharacter.CurrentHP = targetCharacter.MaxHP;
                         }
                         Console.WriteLine($"{targetCharacter.Name} is now at {targetCharacter.CurrentHP}/{targetCharacter.MaxHP} HP.");
                         Console.WriteLine("\n");
-                        int potionIndex = battle.CurrentPartyItemInventory.Inventory.Potions.FindIndex(x => x.potionName == PotionName.HEALING_10);
-                        battle.CurrentPartyItemInventory.Inventory.Potions.RemoveAt(potionIndex);
+                        int potionIndex = battle.CurrentPartyAttackModifierItemInventory.Inventory.Potions.FindIndex(x => x.potionName == PotionName.HEALING_10);
+                        battle.CurrentPartyAttackModifierItemInventory.Inventory.Potions.RemoveAt(potionIndex);
                         break;
                     }
                 // gear expansion
@@ -82,6 +82,40 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Items.Actions
                         Console.WriteLine("\n");
                         int potionIndex = battle.CurrentPartyGearInventory.Inventory.Potions.FindIndex(x => x.potionName == PotionName.HEALING_10);
                         battle.CurrentPartyGearInventory.Inventory.Potions.RemoveAt(potionIndex);
+                        break;
+                    }
+                // items expansion
+                // items and stolen inventory expansions
+                default:
+                    {
+                        for (int i = 0; i < currentCharacter.AvailableActions.Count; i++)
+                        {
+                            if (currentCharacter.AvailableActions[i].ActionType.Equals(characterAction))
+                            {
+                                healingName = currentCharacter.AvailableActions[i].Name;
+                                Random randomHealing = new Random();
+                                if (currentCharacter.AvailableActions[i].MinAmount == currentCharacter.AvailableActions[i].MaxAmount)
+                                {
+                                    totalHealing = randomHealing.Next(currentCharacter.AvailableActions[i].MinAmount, currentCharacter.AvailableActions[i].MaxAmount);
+                                }
+                                else
+                                {
+                                    totalHealing = randomHealing.Next(currentCharacter.AvailableActions[i].MinAmount, currentCharacter.AvailableActions[i].MaxAmount + 1);
+                                }
+                            }
+                        }
+                        Console.WriteLine($"It is {currentCharacter.Name}'s turn...");
+                        Console.WriteLine($"{currentCharacter.Name} used {healingName} on {targetCharacter.Name}.");
+                        Console.WriteLine($"{healingName} heals {totalHealing} to {targetCharacter.Name}.");
+                        targetCharacter.CurrentHP = targetCharacter.CurrentHP + totalHealing;
+                        if (targetCharacter.CurrentHP > targetCharacter.MaxHP)
+                        {
+                            targetCharacter.CurrentHP = targetCharacter.MaxHP;
+                        }
+                        Console.WriteLine($"{targetCharacter.Name} is now at {targetCharacter.CurrentHP}/{targetCharacter.MaxHP} HP.");
+                        Console.WriteLine("\n");
+                        int potionIndex = battle.CurrentPartyItemInventory.Inventory.Potions.FindIndex(x => x.potionName == PotionName.HEALING_10);
+                        battle.CurrentPartyItemInventory.Inventory.Potions.RemoveAt(potionIndex);
                         break;
                     }
             }

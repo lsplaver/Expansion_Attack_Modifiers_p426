@@ -33,6 +33,9 @@ namespace Expansion_Attack_Modifiers_p426
         public CharacterGearInventoryHitChance CurrentCharacterGearInventoryHitChance { get; set; }
         public PartyGearInventoryHitChance CurrentPartyGearInventoryHitChance { get; set; }
         public CharacterAttackModifier CurrentCharacterAttackModifier { get; set; }
+        public PartyAttackModifierItemInventory HeroesPartyAttackModifierItemInventory { get; set; }
+        public PartyAttackModifierItemInventory CurrentPartyAttackModifierItemInventory { get; set; }
+        public List<PartyAttackModifierItemInventory> MonstersPartyAttackModifierItemInventory { get; set; }
 
         public Battle(Party heroes, List<Party> monsters, Character currentCharacter, PartyType currentPartyType, List<Player> players, Player currentPlayer, Party currentParty, string expansions)
         {
@@ -103,6 +106,18 @@ namespace Expansion_Attack_Modifiers_p426
             Players = players;
             Player = player;
             CurrentPartyGearInventoryHitChance = currentPartyGearInventoryHitChance;
+            Expansions = expansions;
+        }
+
+        public Battle(PartyAttackModifierItemInventory heroesPartyAttackModifierItemInventory, List<PartyAttackModifierItemInventory> monstersPartyAttackModifierItemInventory, /*CharacterAttackModifier currentCharacterAttackModifier*/ Character currentCharacter, PartyType currentPartyType, List<Player> players, Player player, PartyAttackModifierItemInventory currentPartyAttackModifierItemInventory, string expansions)
+        {
+            HeroesPartyAttackModifierItemInventory = heroesPartyAttackModifierItemInventory;
+            MonstersPartyAttackModifierItemInventory = monstersPartyAttackModifierItemInventory;
+            CurrentCharacter /*CurrentCharacterAttackModifier*/ = currentCharacter /*currentCharacterAttackModifier*/;
+            CurrentPartyType = currentPartyType;
+            Players = players;
+            Player = player;
+            CurrentPartyAttackModifierItemInventory = currentPartyAttackModifierItemInventory;
             Expansions = expansions;
         }
     }

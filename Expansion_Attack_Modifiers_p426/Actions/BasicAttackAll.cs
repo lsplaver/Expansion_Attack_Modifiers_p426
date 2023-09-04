@@ -158,6 +158,20 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                             }
                             break;
                         }
+                    // items and attack modifier expansions
+                    case "015":
+                    // items, stolen inventory and attack modifier expansions
+                        {
+                            for (int i = 0; i < battle.MonstersPartyAttackModifierItemInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiers.Count; i++)
+                            {
+                                if (battle.MonstersPartyAttackModifierItemInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiers[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyAttackModifierItemInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiers[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    battle.MonstersPartyAttackModifierItemInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiers.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
                     // game's status expansion
                     default:
                         {
@@ -293,6 +307,21 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                                 {
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
                                     battle.Heroes.CharactersAttackModifier.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
+                    // items and attack modifier expansions
+                    case "015":
+                    // items, stolen inventory and attack modifier expansions
+                    case "0135":
+                        {
+                            for (int i = 0; i < battle.HeroesPartyAttackModifierItemInventory.CharacterAttackModifiers.Count; i++)
+                            {
+                                if (battle.HeroesPartyAttackModifierItemInventory.CharacterAttackModifiers[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyAttackModifierItemInventory.CharacterAttackModifiers[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    battle.HeroesPartyAttackModifierItemInventory.CharacterAttackModifiers.RemoveAt(i);
                                 }
                             }
                             break;
