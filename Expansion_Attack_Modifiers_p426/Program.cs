@@ -2582,6 +2582,7 @@ namespace Expansion_Attack_Modifiers_p426
                             // game's status only expansion
                             // items expansion
                             // items and stolen inventory expansions
+                            // attack modifiers expansion
                             default:
                                 {
                                     int i = battle.CurrentCharacter.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
@@ -2715,6 +2716,37 @@ namespace Expansion_Attack_Modifiers_p426
                                     basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifier, p.CharactersAttackModifier[selectedTarget], battle.CurrentCharacterAttackModifier.AvailableActions[i].ActionType, strExpansions);
                                     break;
                                 }
+                            // items and attack modifiers expansions
+                            case "015":
+                            // items, stolen inventory and attack modifiers expansions
+                            case "0135":
+                                {
+                                    PartyAttackModifierItemInventory p = (PartyAttackModifierItemInventory)GetOtherParty(battle, strExpansions);
+                                    Console.WriteLine("Please select the tatget character from the following list of characters:");
+                                    for (int j = 0; j < p.CharacterAttackModifiers.Count; j++)
+                                    {
+                                        Console.WriteLine($"{j}: {p.CharacterAttackModifiers[j].Name}");
+                                    }
+                                    int selectedTarget = -1;
+                                    while (selectedTarget < 0 || selectedTarget >= p.CharacterAttackModifiers.Count)
+                                    {
+                                        try
+                                        {
+                                            selectedTarget = Convert.ToInt32(Console.ReadLine());
+                                            if (selectedTarget < 0 || selectedTarget >= p.CharacterAttackModifiers.Count)
+                                            {
+                                                Console.WriteLine($"You must select a number between 0 and {p.CharacterAttackModifiers.Count - 1}");
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine(ex.Message);
+                                        }
+                                    }
+                                    int i = battle.CurrentCharacter.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
+                                    basicAttackAll.Actions(battle, battle.CurrentCharacter, p.CharacterAttackModifiers[selectedTarget], battle.CurrentCharacter.AvailableActions[i].ActionType, strExpansions);
+                                    break;
+                                }
                             // game's status expansion
                             // items expansion
                             // items and stolen inventory expansions
@@ -2748,7 +2780,6 @@ namespace Expansion_Attack_Modifiers_p426
                                     basicAttackAll.Actions(battle, battle.CurrentCharacter, p.Characters[selectedTarget], battle.CurrentCharacter.AvailableActions[i].ActionType, strExpansions);
                                     break;
                                 }
-
                         }
                         break;
                     }
@@ -2799,6 +2830,23 @@ namespace Expansion_Attack_Modifiers_p426
                                     {
                                         int i = battle.CurrentCharacterGearInventoryHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
                                         heal10PotionAll.Actions(battle, battle.CurrentCharacterGearInventoryHitChance, battle.CurrentCharacterGearInventoryHitChance, battle.CurrentCharacterGearInventoryHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("There is no heal potion available, please select again.");
+                                        CurrentHumanTurn(battle, strExpansions);
+                                    }
+                                    break;
+                                }
+                            // items and attack modifiers expansions
+                            case "015":
+                            // items, stolen inventory and attack modifiers expansions
+                            case "0135":
+                                {
+                                    if (battle.CurrentPartyAttackModifierItemInventory.Inventory.Potions.Count > 0)
+                                    {
+                                        int i = battle.CurrentCharacterAttackModifier.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
+                                        heal10PotionAll.Actions(battle, battle.CurrentCharacterAttackModifier, battle.CurrentCharacterAttackModifier, battle.CurrentCharacterAttackModifier.AvailableActions[i].ActionType, strExpansions);
                                     }
                                     else
                                     {
