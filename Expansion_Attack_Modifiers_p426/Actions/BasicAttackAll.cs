@@ -82,12 +82,21 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                     case "02":
                     // items and gear expansions
                     case "012":
+                    // gear and stolen inventory expansions
+                    case "023":
+                    // gear, items and stolen inventory expansions
+                    case "0123":
                         {
                             for (int i = 0; i < battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory.Count; i++)
                             {
                                 if (battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i].CurrentHP == 0)
                                 {
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    if (strExpansions.Equals("023") || strExpansions.Equals("0123"))
+                                    {
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.MonstersItemInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i], battle.CurrentPartyGearInventory);
+                                    }
                                     battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory.RemoveAt(i);
                                 }
                             }
@@ -97,37 +106,9 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                     case "024":
                     // items, gear and vin fletcher expansions
                     case "0124":
-                        {
-                            for (int i = 0; i < battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances.Count; i++)
-                            {
-                                if (battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i].CurrentHP == 0)
-                                {
-                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
-                                    battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances.RemoveAt(i);
-                                }
-                            }
-                            break;
-                        }
-                    // gear and stolen inventory expansions
-                    case "023":
-                    // items, gear and stolen inventory expansions
-                    case "0123":
-                        {
-                            for (int i = 0; i < battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory.Count; i++)
-                            {
-                                if (battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i].CurrentHP == 0)
-                                {
-                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
-                                    StolenInventories stolenInventories = new StolenInventories();
-                                    stolenInventories.StolenInventory(battle, battle.MonstersItemInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i], battle.CurrentPartyGearInventory);
-                                    battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory.RemoveAt(i);
-                                }
-                            }
-                            break;
-                        }
                     // gear, stolen inventory and vin fletcher expansions
                     case "0234":
-                    // items, gear, stolen inventory and vin fletcher expansions
+                    // gear, items, stolem inventory and vin fletcher expansions
                     case "01234":
                         {
                             for (int i = 0; i < battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances.Count; i++)
@@ -135,13 +116,50 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                                 if (battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i].CurrentHP == 0)
                                 {
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
-                                    StolenInventories stolenInventories = new StolenInventories();
-                                    stolenInventories.StolenInventory(battle, battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i], battle.CurrentPartyGearInventoryHitChance);
+                                    if (strExpansions.Equals("0234") || strExpansions.Equals("01234"))
+                                    {
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i], battle.CurrentPartyGearInventoryHitChance);
+                                    }
                                     battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances.RemoveAt(i);
                                 }
                             }
                             break;
                         }
+                    //// gear and stolen inventory expansions
+                    //case "023":
+                    //// items, gear and stolen inventory expansions
+                    //case "0123":
+                    //    {
+                    //        for (int i = 0; i < battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory.Count; i++)
+                    //        {
+                    //            if (battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i].CurrentHP == 0)
+                    //            {
+                    //                Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                    //                StolenInventories stolenInventories = new StolenInventories();
+                    //                stolenInventories.StolenInventory(battle, battle.MonstersItemInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory[i], battle.CurrentPartyGearInventory);
+                    //                battle.MonstersGearInventory[battle.CurrentMonsterPartyNumber].CharactersGearInventory.RemoveAt(i);
+                    //            }
+                    //        }
+                    //        break;
+                    //    }
+                    //// gear, stolen inventory and vin fletcher expansions
+                    //case "0234":
+                    //// items, gear, stolen inventory and vin fletcher expansions
+                    //case "01234":
+                    //    {
+                    //        for (int i = 0; i < battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances.Count; i++)
+                    //        {
+                    //            if (battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i].CurrentHP == 0)
+                    //            {
+                    //                Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                    //                StolenInventories stolenInventories = new StolenInventories();
+                    //                stolenInventories.StolenInventory(battle, battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances[i], battle.CurrentPartyGearInventoryHitChance);
+                    //                battle.MonstersPartyGearInventoryHitChances[battle.CurrentMonsterPartyNumber].CharacterGearInventoryHitChances.RemoveAt(i);
+                    //            }
+                    //        }
+                    //        break;
+                    //    }
                     // vin fletcher expansion
                     case "04":
                         {
@@ -188,6 +206,30 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                             }
                             break;
                         }
+                    // gear and attack modifiers expansions
+                    case "025":
+                    // items, gear and attack modifiers expansions
+                    case "0125":
+                    // gear, stolen inventory and attack modifiers expansions
+                    case "0235":
+                    // gear, items, stolen inventory and attack modifiers expansions
+                    case "01235":
+                        {
+                            for (int i = 0; i < battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.Count; i++)
+                            {
+                                if (battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    if (strExpansions.Equals("0235") || strExpansions.Equals("01235"))
+                                    {
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i], battle.CurrentPartyAttackModifierGearInventory);
+                                    }
+                                    battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
                     // game's status expansion
                     default:
                         {
@@ -219,11 +261,8 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
                                     if (strExpansions.Equals("013"))
                                     {
-                                        if (strExpansions.Equals("013"))
-                                        {
-                                            StolenInventories stolenInventories = new StolenInventories();
-                                            stolenInventories.StolenInventory(battle, battle.HeroesItemInventory, battle.CurrentPartyItemInventory);
-                                        }
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.HeroesItemInventory, battle.CurrentPartyItemInventory);
                                     }
                                     battle.HeroesItemInventory.CharactersGearInventory.RemoveAt(i);
                                 }
@@ -242,11 +281,8 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
                                     if (strExpansions.Equals("0134"))
                                     {
-                                        if (strExpansions.Equals("013"))
-                                        {
-                                            StolenInventories stolenInventories = new StolenInventories();
-                                            stolenInventories.StolenInventory(battle, battle.HeroesItemInventoryHitChance, battle.CurrentPartyItemInventory);
-                                        }
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.HeroesItemInventoryHitChance, battle.CurrentPartyItemInventory);
                                     }
                                     battle.HeroesItemInventoryHitChance.CharactersHitChance.RemoveAt(i);
                                 }
@@ -257,12 +293,21 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                     case "02":
                     // items and gear expansions
                     case "012":
+                    // gear and stolen inventory expansions
+                    case "023":
+                    // items, gear and stolen inventory expansions
+                    case "0123":
                         {
                             for (int i = 0; i < battle.HeroesGearInventory.CharactersGearInventory.Count; i++)
                             {
                                 if (battle.HeroesGearInventory.CharactersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.HeroesGearInventory.CharactersGearInventory[i].CurrentHP == 0)
                                 {
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    if (strExpansions.Equals("023") || strExpansions.Equals("0123"))
+                                    {
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.HeroesGearInventory.CharactersGearInventory[i], battle.CurrentPartyGearInventory);
+                                    }
                                     battle.HeroesGearInventory.CharactersGearInventory.RemoveAt(i);
                                 }
                             }
@@ -278,45 +323,50 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                                 if (battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i].CurrentHP == 0)
                                 {
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    if (strExpansions.Equals("0234") || strExpansions.Equals("01234"))
+                                    {
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i], battle.CurrentPartyGearInventoryHitChance);
+                                    }
                                     battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances.RemoveAt(i);
                                 }
                             }
                             break;
                         }
-                    // gear and stolen inventory expansions
-                    case "023":
-                    // items, gear and stolen inventory expansions
-                    case "0123":
-                        {
-                            for (int i = 0; i < battle.HeroesGearInventory.CharactersGearInventory.Count; i++)
-                            {
-                                if (battle.HeroesGearInventory.CharactersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.HeroesGearInventory.CharactersGearInventory[i].CurrentHP == 0)
-                                {
-                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
-                                    StolenInventories stolenInventories = new StolenInventories();
-                                    stolenInventories.StolenInventory(battle, battle.HeroesGearInventory.CharactersGearInventory[i], battle.CurrentPartyGearInventory);
-                                    battle.HeroesGearInventory.CharactersGearInventory.RemoveAt(i);
-                                }
-                            }
-                            break;
-                        }
-                    // gear, stolen inventory and vin fletcher expansions
-                    case "0234":
-                    // items, gear, stolen inventory and vin fletcher expansions
-                    case "01234":
-                        {
-                            for (int i = 0; i < battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances.Count; i++)
-                            {
-                                if (battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i].CurrentHP == 0)
-                                {
-                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
-                                    StolenInventories stolenInventories = new StolenInventories();
-                                    stolenInventories.StolenInventory(battle, battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i], battle.CurrentPartyGearInventoryHitChance);
-                                    battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances.RemoveAt(i);
-                                }
-                            }
-                            break;
-                        }
+                    //// gear and stolen inventory expansions
+                    //case "023":
+                    //// items, gear and stolen inventory expansions
+                    //case "0123":
+                    //    {
+                    //        for (int i = 0; i < battle.HeroesGearInventory.CharactersGearInventory.Count; i++)
+                    //        {
+                    //            if (battle.HeroesGearInventory.CharactersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.HeroesGearInventory.CharactersGearInventory[i].CurrentHP == 0)
+                    //            {
+                    //                Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                    //                StolenInventories stolenInventories = new StolenInventories();
+                    //                stolenInventories.StolenInventory(battle, battle.HeroesGearInventory.CharactersGearInventory[i], battle.CurrentPartyGearInventory);
+                    //                battle.HeroesGearInventory.CharactersGearInventory.RemoveAt(i);
+                    //            }
+                    //        }
+                    //        break;
+                    //    }
+                    //// gear, stolen inventory and vin fletcher expansions
+                    //case "0234":
+                    //// items, gear, stolen inventory and vin fletcher expansions
+                    //case "01234":
+                    //    {
+                    //        for (int i = 0; i < battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances.Count; i++)
+                    //        {
+                    //            if (battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i].CurrentHP == 0)
+                    //            {
+                    //                Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                    //                StolenInventories stolenInventories = new StolenInventories();
+                    //                stolenInventories.StolenInventory(battle, battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances[i], battle.CurrentPartyGearInventoryHitChance);
+                    //                battle.HeroesPartyGearInventoryHitChance.CharacterGearInventoryHitChances.RemoveAt(i);
+                    //            }
+                    //        }
+                    //        break;
+                    //    }
                     // vin fletcher expansion
                     case "04":
                         {
@@ -355,13 +405,34 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
                                     if (strExpansions.Equals("0135"))
                                     {
-                                        if (strExpansions.Equals("013"))
-                                        {
-                                            StolenInventories stolenInventories = new StolenInventories();
-                                            stolenInventories.StolenInventory(battle, battle.HeroesPartyAttackModifierItemInventory, battle.CurrentPartyAttackModifierItemInventory);
-                                        }
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.HeroesPartyAttackModifierItemInventory, battle.CurrentPartyAttackModifierItemInventory);
                                     }
                                     battle.HeroesPartyAttackModifierItemInventory.CharacterAttackModifiers.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
+                    // gear and attack modifiers expansions
+                    case "025":
+                    // items, gear and attack modifiers expansions
+                    case "0125":
+                    // gear, stolen inventory and attack modifiers expansions
+                    case "0235":
+                    // items, gear, stolen inventory and attack modifiers expansions
+                    case "01235":
+                        {
+                            for (int i = 0; i < battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count; i++)
+                            {
+                                if (battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    if (strExpansions.Equals("023") || strExpansions.Equals("0123"))
+                                    {
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i], battle.CurrentPartyAttackModifierGearInventory);
+                                    }
+                                    battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.RemoveAt(i);
                                 }
                             }
                             break;

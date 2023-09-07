@@ -9,25 +9,63 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
         public void Actions(Battle battle, CharacterGearInventory currentCharacter, CharacterGearInventory targetCharacter, ActionTypes characterAction, string strExpansions)
         {
             int x = -1, y = -1, z = -1;
-            for (int i = 0; i < currentCharacter.AvailableActions.Count; i++)
-            {
-                if (currentCharacter.AvailableActions[i].ActionType.Equals(characterAction))
-                {
-                    for (int j = 0; j < battle.CurrentPartyGearInventory.CharactersGearInventory.Count; j++)
-                    {
-                        if (battle.CurrentPartyGearInventory.CharactersGearInventory[j].CharacterID.Equals(currentCharacter.CharacterID))
-                        {
-                            x = j;
-                        }
-                    }
-                }
-            }
             int k = 0;
-            Console.WriteLine("Please select a weapon from the following list to equip.");
-            foreach (Weapon w in battle.CurrentPartyGearInventory.Inventory.Weapons)
+            string name = "";
+            switch (strExpansions)
             {
-                Console.WriteLine($"{k}: {w.Name}");
-                k++;
+                // gear and attack modifiers expansions
+                case "025":
+                // gear, items and attack modifiers expansions
+                case "0125":
+                // gear, stolen inventory and attack modifiers expansions
+                case "0235":
+                // gear, items, stolen inventory and attack modifiers expansions
+                case "01235":
+                    {
+                        for (int i = 0; i < currentCharacter.AvailableActions.Count; i++)
+                        {
+                            if (currentCharacter.AvailableActions[i].ActionType.Equals(characterAction))
+                            {
+                                for (int j = 0; j < battle.CurrentPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.Count; j++)
+                                {
+                                    if (battle.CurrentPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory[j].CharacterID.Equals(currentCharacter.CharacterID))
+                                    {
+                                        x = j;
+                                    }
+                                }
+                            }
+                        }
+                        Console.WriteLine("Please select a weapon from the following list to equip.");
+                        foreach (Weapon w in battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons)
+                        {
+                            Console.WriteLine($"{k}: {w.Name}");
+                            k++;
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        for (int i = 0; i < currentCharacter.AvailableActions.Count; i++)
+                        {
+                            if (currentCharacter.AvailableActions[i].ActionType.Equals(characterAction))
+                            {
+                                for (int j = 0; j < battle.CurrentPartyGearInventory.CharactersGearInventory.Count; j++)
+                                {
+                                    if (battle.CurrentPartyGearInventory.CharactersGearInventory[j].CharacterID.Equals(currentCharacter.CharacterID))
+                                    {
+                                        x = j;
+                                    }
+                                }
+                            }
+                        }
+                        Console.WriteLine("Please select a weapon from the following list to equip.");
+                        foreach (Weapon w in battle.CurrentPartyGearInventory.Inventory.Weapons)
+                        {
+                            Console.WriteLine($"{k}: {w.Name}");
+                            k++;
+                        }
+                        break;
+                    }
             }
             if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
             {
@@ -37,9 +75,31 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
                     try
                     {
                         y = Convert.ToInt32(Console.ReadLine());
-                        if (y >= 0 && y <= battle.CurrentPartyGearInventory.Inventory.Weapons.Count)
+                        switch (strExpansions)
                         {
-                            isValid = true;
+                            // gear and attack modifiers expansions
+                            case "025":
+                            // gear, items and attack modifiers expanasions
+                            case "0125":
+                            // gear, stolen inventory and attack modifiers espansions
+                            case "0235":
+                            // gear, items, stolen inventory and attack modifiers expansions
+                            case "01235":
+                                {
+                                    if (y >= 0 && y <= battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.Count)
+                                    {
+                                        isValid = true;
+                                    }
+                                    break;
+                                }
+                            default:
+                                {
+                                    if (y >= 0 && y <= battle.CurrentPartyGearInventory.Inventory.Weapons.Count)
+                                    {
+                                        isValid = true;
+                                    }
+                                    break;
+                                }
                         }
                     }
                     catch (Exception e)
@@ -50,47 +110,126 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
             }
             else
             {
-                string name = "";
                 int maxDamage = 0;
                 int minDamage = 0;
-                for (int i = 0; i < battle.CurrentPartyGearInventory.Inventory.Weapons.Count; i++)
+                switch (strExpansions)
                 {
-                    if (battle.CurrentPartyGearInventory.Inventory.Weapons[i].MaxDamage > maxDamage)
-                    {
-                        name = battle.CurrentPartyGearInventory.Inventory.Weapons[i].Name;
-                        maxDamage = battle.CurrentPartyGearInventory.Inventory.Weapons[i].MaxDamage;
-                        minDamage = battle.CurrentPartyGearInventory.Inventory.Weapons[i].MinDamage;
-                    }
-                    else if (battle.CurrentPartyGearInventory.Inventory.Weapons[i].MaxDamage == maxDamage)
-                    {
-                        if (battle.CurrentPartyGearInventory.Inventory.Weapons[i].MinDamage > minDamage)
+                    // gear and attack modifiers expansions
+                    case "025":
+                    // gear, items and attack modifiers expansions
+                    case "0125":
+                    // gear, stolen inventory and attack modifiers expansions
+                    case "0235":
+                    // gear, items, stolen inventory and attack modifiers expansions
+                    case "01235":
                         {
-                            name = battle.CurrentPartyGearInventory.Inventory.Weapons[i].Name;
-                            maxDamage = battle.CurrentPartyGearInventory.Inventory.Weapons[i].MaxDamage;
-                            minDamage = battle.CurrentPartyGearInventory.Inventory.Weapons[i].MinDamage;
+                            for (int i = 0; i < battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.Count; i++)
+                            {
+                                if (battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MaxDamage > maxDamage)
+                                {
+                                    name = battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].Name;
+                                    maxDamage = battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MaxDamage;
+                                    minDamage = battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MinDamage;
+                                }
+                                else if (battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MaxDamage == maxDamage)
+                                {
+                                    if (battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MinDamage > minDamage)
+                                    {
+                                        name = battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].Name;
+                                        maxDamage = battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MaxDamage;
+                                        minDamage = battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MinDamage;
+                                    }
+                                }
+                            }
+                            y = battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.FindIndex(x => x.Name == name);
+                            break;
                         }
-                    }
-                }
-                y = battle.CurrentPartyGearInventory.Inventory.Weapons.FindIndex(x => x.Name == name);
+                    default:
+                        {
+                            for (int i = 0; i < battle.CurrentPartyGearInventory.Inventory.Weapons.Count; i++)
+                            {
+                                if (battle.CurrentPartyGearInventory.Inventory.Weapons[i].MaxDamage > maxDamage)
+                                {
+                                    name = battle.CurrentPartyGearInventory.Inventory.Weapons[i].Name;
+                                    maxDamage = battle.CurrentPartyGearInventory.Inventory.Weapons[i].MaxDamage;
+                                    minDamage = battle.CurrentPartyGearInventory.Inventory.Weapons[i].MinDamage;
+                                }
+                                else if (battle.CurrentPartyGearInventory.Inventory.Weapons[i].MaxDamage == maxDamage)
+                                {
+                                    if (battle.CurrentPartyGearInventory.Inventory.Weapons[i].MinDamage > minDamage)
+                                    {
+                                        name = battle.CurrentPartyGearInventory.Inventory.Weapons[i].Name;
+                                        maxDamage = battle.CurrentPartyGearInventory.Inventory.Weapons[i].MaxDamage;
+                                        minDamage = battle.CurrentPartyGearInventory.Inventory.Weapons[i].MinDamage;
+                                    }
+                                }
+                            }
+                            y = battle.CurrentPartyGearInventory.Inventory.Weapons.FindIndex(x => x.Name == name);
+                            break;
+                        }
+                }    
             }
             Console.WriteLine($"It is {currentCharacter.Name}'s turn...");
-            Console.WriteLine($"{currentCharacter.Name} equipped {battle.CurrentPartyGearInventory.Inventory.Weapons[y].Name}.");
+            if (y >= 0)
+            {
+                Console.WriteLine($"{currentCharacter.Name} equipped {/*battle.CurrentPartyGearInventory.Inventory.Weapons[y].Name*/ name}.");
+            }
             if (currentCharacter.CharacterInventory.Weapons.Count > 0)
             {
                 Weapon tempWeapon = currentCharacter.CharacterInventory.Weapons[0];
                 int a = currentCharacter.AvailableActions.FindIndex(x => x.ActionType == ActionTypes.GEAR_ATTACK);
                 currentCharacter.AvailableActions.RemoveAt(a);
                 currentCharacter.CharacterInventory.Weapons.RemoveAt(0);
-                currentCharacter.CharacterInventory.Weapons.Add(battle.CurrentPartyGearInventory.Inventory.Weapons[y]);
+                switch (strExpansions)
+                {
+                    // gear and attakc modifiers expansions
+                    case "025":
+                    // gear, items and attack modifiers expansions
+                    case "0125":
+                    // gear, stolen inventory and attack modifiers expansions
+                    case "0235":
+                    // gear, items, stolen inventory and attack modifiers expansions
+                    case "01235":
+                        {
+                            currentCharacter.CharacterInventory.Weapons.Add(battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[y]);
+                            break;
+                        }
+                    default:
+                        {
+                            currentCharacter.CharacterInventory.Weapons.Add(battle.CurrentPartyGearInventory.Inventory.Weapons[y]);
+                            break;
+                        }
+                }
                 currentCharacter.AvailableActions.Add(currentCharacter.CharacterInventory.Weapons[0].AvailableAction);
                 battle.CurrentPartyGearInventory.Inventory.Weapons.RemoveAt(y);
                 battle.CurrentPartyGearInventory.Inventory.Weapons.Add(tempWeapon);
             }
             else
             {
-                currentCharacter.CharacterInventory.Weapons.Add(battle.CurrentPartyGearInventory.Inventory.Weapons[y]);
-                currentCharacter.AvailableActions.Add(currentCharacter.CharacterInventory.Weapons[0].AvailableAction);
-                battle.CurrentPartyGearInventory.Inventory.Weapons.RemoveAt(y);
+                switch (strExpansions)
+                {
+                    // gear and attakc modifiers expansions
+                    case "025":
+                    // gear, items and attack modifiers expansions
+                    case "0125":
+                    // gear, stolen inventory and attack modifiers expansions
+                    case "0235":
+                    // gear, items, stolen inventory and attack modifiers expansions
+                    case "01235":
+                        {
+                            currentCharacter.CharacterInventory.Weapons.Add(battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[y]);
+                            currentCharacter.AvailableActions.Add(currentCharacter.CharacterInventory.Weapons[0].AvailableAction);
+                            battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.RemoveAt(y);
+                            break;
+                        }
+                    default:
+                        {
+                            currentCharacter.CharacterInventory.Weapons.Add(battle.CurrentPartyGearInventory.Inventory.Weapons[y]);
+                            currentCharacter.AvailableActions.Add(currentCharacter.CharacterInventory.Weapons[0].AvailableAction);
+                            battle.CurrentPartyGearInventory.Inventory.Weapons.RemoveAt(y);
+                            break;
+                        }
+                }
             }
             Console.WriteLine("\n");
         }

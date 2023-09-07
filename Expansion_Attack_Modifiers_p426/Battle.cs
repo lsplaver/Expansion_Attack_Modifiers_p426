@@ -36,6 +36,10 @@ namespace Expansion_Attack_Modifiers_p426
         public PartyAttackModifierItemInventory HeroesPartyAttackModifierItemInventory { get; set; }
         public PartyAttackModifierItemInventory CurrentPartyAttackModifierItemInventory { get; set; }
         public List<PartyAttackModifierItemInventory> MonstersPartyAttackModifierItemInventory { get; set; }
+        public PartyAttackModifierGearInventory HeroesPartyAttackModifierGearinventory { get; set; }
+        public List<PartyAttackModifierGearInventory> MonstersPartyAttackModifierGearinventory { get; set; }
+        public CharacterAttackModifierGearInventory CurrentCharacterAttackModifierGearinventory { get; set; }
+        public PartyAttackModifierGearInventory CurrentPartyAttackModifierGearInventory { get; set; }
 
         public Battle(Party heroes, List<Party> monsters, Character currentCharacter, PartyType currentPartyType, List<Player> players, Player currentPlayer, Party currentParty, string expansions)
         {
@@ -118,6 +122,18 @@ namespace Expansion_Attack_Modifiers_p426
             Players = players;
             Player = player;
             CurrentPartyAttackModifierItemInventory = currentPartyAttackModifierItemInventory;
+            Expansions = expansions;
+        }
+
+        public Battle(PartyAttackModifierGearInventory heroesPartyAttackModifierGearInventory, List<PartyAttackModifierGearInventory> monstersPartyAttackModifierGearinventory, CharacterAttackModifierGearInventory currentCharacterAttackModifierGearInventory, PartyType currentPartyType, List<Player> players, Player player, PartyAttackModifierGearInventory currentPartyAttackModifierGearInventory, string expansions)
+        {
+            HeroesPartyAttackModifierGearinventory = heroesPartyAttackModifierGearInventory;
+            MonstersPartyAttackModifierGearinventory = monstersPartyAttackModifierGearinventory;
+            CurrentCharacterAttackModifierGearinventory = currentCharacterAttackModifierGearInventory;
+            CurrentPartyType = currentPartyType;
+            Players = players;
+            Player = player;
+            CurrentPartyAttackModifierGearInventory = currentPartyAttackModifierGearInventory;
             Expansions = expansions;
         }
     }

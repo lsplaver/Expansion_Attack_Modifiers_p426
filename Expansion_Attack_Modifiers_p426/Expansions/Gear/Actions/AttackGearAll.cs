@@ -142,6 +142,46 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
                             }
                             break;
                         }
+                    // gear and attack modifiers expansions
+                    case "025":
+                    // items, gear and attack modifiers expansions
+                    case "0125":
+                    // gear, vin fletcher and attack modifiers expansions
+                    case "0245":
+                    // items, gear, vin fletcher and attack modifiers expansions
+                    case "01245":
+                        {
+                            for (int i = 0; i < battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.Count; i++)
+                            {
+                                if (battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
+                    // gear, stolen inventory and attack modifiers expansions
+                    case "0235":
+                    // items, gear, stolen inventory and attack modifiers expansions
+                    case "01235":
+                    // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "02345":
+                    // items, gear, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "012345":
+                        {
+                            for (int i = 0; i < battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.Count; i++)
+                            {
+                                if (battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    StolenInventories stolenInventories = new StolenInventories();
+                                    stolenInventories.StolenInventory(battle, targetCharacter, battle.CurrentPartyAttackModifierGearInventory);
+                                    battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
                     // game's status expansion
                     // vin fletcher expansion
                     default:
@@ -218,6 +258,46 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
                                     StolenInventories stolenInventories = new StolenInventories();
                                     stolenInventories.StolenInventory(battle, targetCharacter, battle.CurrentPartyGearInventory);
                                     battle.HeroesGearInventory.CharactersGearInventory.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
+                    // gear and attack modifiers expansions
+                    case "025":
+                    // items, gear and attack modifiers expansions
+                    case "0125":
+                    // gear, vin fletcher and attack modifiers expansions
+                    case "0245":
+                    // items, gear, vin fletcher and attack modifiers expansions
+                    case "01245":
+                        {
+                            for (int i = 0; i < battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count; i++)
+                            {
+                                if (battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
+                    // gear, stolen inventory and attack modifiers expansions
+                    case "0235":
+                    // items, gear, stolen inventory and attack modifiers expansions
+                    case "01235":
+                    // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "02345":
+                    // items, gear, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "012345":
+                        {
+                            for (int i = 0; i < battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count; i++)
+                            {
+                                if (battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    StolenInventories stolenInventories = new StolenInventories();
+                                    stolenInventories.StolenInventory(battle, targetCharacter, battle.CurrentPartyAttackModifierGearInventory);
+                                    battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.RemoveAt(i);
                                 }
                             }
                             break;
