@@ -46,6 +46,19 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                         Console.WriteLine($"{battle.CurrentCharacterHitChance.Name} did {characterAction}\n");
                         break;
                     }
+                // gear and attack modifiers expansions
+                case "025":
+                // items, gear and attack modifiers expansions
+                case "0125":
+                // gear, stolen inventory and attack modifiers expansions
+                case "0235":
+                // items, gear, stolen and attack modifiers inventory expansions
+                case "01235":
+                    {
+                        Console.WriteLine($"It is {battle.CurrentCharacterAttackModifierGearinventory.Name}'s turn...");
+                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierGearinventory.Name} did {characterAction}\n");
+                        break;
+                    }
                 // game's status expansion
                 default:
                     {

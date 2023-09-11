@@ -192,17 +192,20 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
                     case "01235":
                         {
                             currentCharacter.CharacterInventory.Weapons.Add(battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[y]);
+                            currentCharacter.AvailableActions.Add(currentCharacter.CharacterInventory.Weapons[0].AvailableAction);
+                            battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.RemoveAt(y);
+                            battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.Add(tempWeapon);
                             break;
                         }
                     default:
                         {
                             currentCharacter.CharacterInventory.Weapons.Add(battle.CurrentPartyGearInventory.Inventory.Weapons[y]);
+                            currentCharacter.AvailableActions.Add(currentCharacter.CharacterInventory.Weapons[0].AvailableAction);
+                            battle.CurrentPartyGearInventory.Inventory.Weapons.RemoveAt(y);
+                            battle.CurrentPartyGearInventory.Inventory.Weapons.Add(tempWeapon);
                             break;
                         }
                 }
-                currentCharacter.AvailableActions.Add(currentCharacter.CharacterInventory.Weapons[0].AvailableAction);
-                battle.CurrentPartyGearInventory.Inventory.Weapons.RemoveAt(y);
-                battle.CurrentPartyGearInventory.Inventory.Weapons.Add(tempWeapon);
             }
             else
             {
