@@ -1060,6 +1060,10 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
                                 increasedDamage = true;
                                 attackModifierOffensives.Add(currentCharacter.AttackModifiersOffensive[i]);
                             }
+                            else
+                            {
+                                increasedDamageDealt += damageDealt;
+                            }
                         }
                         else
                         {
