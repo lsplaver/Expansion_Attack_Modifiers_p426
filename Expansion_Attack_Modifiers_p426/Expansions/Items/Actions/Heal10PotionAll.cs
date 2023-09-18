@@ -47,8 +47,8 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Items.Actions
                         battle.CurrentPartyAttackModifierItemInventory.Inventory.Potions.RemoveAt(potionIndex);
                         break;
                     }
-                // gear expansion
-                case "02":
+                //// gear expansion
+                //case "02":
                 // items and gear expansions
                 case "012":
                 // items, gear and stolen inventory expansions
@@ -82,6 +82,41 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Items.Actions
                         Console.WriteLine("\n");
                         int potionIndex = battle.CurrentPartyGearInventory.Inventory.Potions.FindIndex(x => x.potionName == PotionName.HEALING_10);
                         battle.CurrentPartyGearInventory.Inventory.Potions.RemoveAt(potionIndex);
+                        break;
+                    }
+                // items, gear and attack modifiers expansions
+                case "0125":
+                // items, gear, stolen inventory and attack modifiers expansions
+                case "01235":
+                    {
+                        for (int i = 0; i < battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.Count; i++)
+                        {
+                            if (battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType.Equals(characterAction))
+                            {
+                                healingName = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].Name;
+                                Random randomHealing = new Random();
+                                if (battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].MinAmount == battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].MaxAmount)
+                                {
+                                    totalHealing = randomHealing.Next(battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].MinAmount, battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].MaxAmount);
+                                }
+                                else
+                                {
+                                    totalHealing = randomHealing.Next(battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].MinAmount, battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].MaxAmount + 1);
+                                }
+                            }
+                        }
+                        Console.WriteLine($"It is {battle.CurrentCharacterAttackModifierGearInventory.Name}'s turn...");
+                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierGearInventory.Name} used {healingName} on {battle.CurrentCharacterAttackModifierGearInventory.Name}.");
+                        Console.WriteLine($"{healingName} heals {totalHealing} to {battle.CurrentCharacterAttackModifierGearInventory.Name}.");
+                        battle.CurrentCharacterAttackModifierGearInventory.CurrentHP = battle.CurrentCharacterAttackModifierGearInventory.CurrentHP + totalHealing;
+                        if (battle.CurrentCharacterAttackModifierGearInventory.MaxHP > 0)
+                        {
+                            battle.CurrentCharacterAttackModifierGearInventory.CurrentHP = battle.CurrentCharacterAttackModifierGearInventory.MaxHP;
+                        }
+                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierGearInventory.Name} is now at {battle.CurrentCharacterAttackModifierGearInventory.CurrentHP}/{battle.CurrentCharacterAttackModifierGearInventory.MaxHP} HP.");
+                        Console.WriteLine("\n");
+                        int potionIndex = battle.CurrentPartyAttackModifierGearInventory.Inventory.Potions.FindIndex(x => x.potionName == PotionName.HEALING_10);
+                        battle.CurrentPartyAttackModifierGearInventory.Inventory.Potions.RemoveAt(potionIndex);
                         break;
                     }
                 // items expansion

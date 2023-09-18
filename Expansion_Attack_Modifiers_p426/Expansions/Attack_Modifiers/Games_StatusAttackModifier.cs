@@ -67,9 +67,9 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("================================== BATTLE ==================================");
-            foreach (Character c in battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory)
+            foreach (Character c in battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory)
             {
-                if (c.Name.Equals(battle.CurrentPartyAttackModifierGearInventory.Name))
+                if (c.Name.Equals(battle.CurrentCharacterAttackModifierGearInventory.Name))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
@@ -79,7 +79,7 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers
             Console.WriteLine("==================================   VS   ==================================");
             foreach (Character c in currentMonsterParty.CharacterAttackModifiersGearInventory)
             {
-                if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifierGearinventory.CharacterID))
+                if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifierGearInventory.CharacterID))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }

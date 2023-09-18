@@ -745,6 +745,67 @@ namespace Expansion_Attack_Modifiers_p426
                         GameStart(battle);
                         break;
                     }
+                // ..\\..\\..\\Expansions\\Game_Status.cs
+                // ..\\..\\..\\Expansions\\Items
+                // ..\\..\\..\\Expansions\\Gear
+                // ..\\..\\..\\Expansions\\Attack_Modifiers
+                case "0125":
+                // ..\\..\\..\\Expansions\\Games_Status.cs
+                // ..\\..\\..\\Expansions\\Items
+                // ..\\..\\..\\Expansions\\Gear
+                // ..\\..\\..\\Expansions\\Stolen_inventory
+                // ..\\..\\..\\Expansions\\Attack_Modifiers
+                case "01235":
+                    {
+                        // creates player list
+                        List<Player> playerList = SetPlayers();
+                        // creates hero character
+                        CharacterAttackModifierGearInventory trueProgrammer = (CharacterAttackModifierGearInventory)CreateHeroCharacter(strExpansions, "trueProgrammer");
+                        List<CharacterAttackModifierGearInventory> characters = new List<CharacterAttackModifierGearInventory> { trueProgrammer };
+                        List<Weapon?> heroGear = new List<Weapon?>();
+                        Inventory heroPartyInventory = new Inventory();
+                        heroPartyInventory.Weapons = heroGear;
+                        heroPartyInventory.Potions = GetHeroPartyItems();
+                        PartyAttackModifierGearInventory heroes = new PartyAttackModifierGearInventory(characters, PartyType.Heroes, "Heroes", heroPartyInventory);
+                        List<CharacterAttackModifierGearInventory> monsterCharacters = CreateMonsterCharactersAttackModifierGearInventory(strExpansions);
+                        List<CharacterAttackModifierGearInventory> monsterCharacters1 = new List<CharacterAttackModifierGearInventory> { monsterCharacters[0] };
+                        List<CharacterAttackModifierGearInventory> monsterCharacters2 = new List<CharacterAttackModifierGearInventory> { monsterCharacters[1], monsterCharacters[2] };
+                        List<CharacterAttackModifierGearInventory> monsterCharacters3 = new List<CharacterAttackModifierGearInventory> { monsterCharacters[3], monsterCharacters[4] };
+                        List<CharacterAttackModifierGearInventory> monsterCharacters4 = new List<CharacterAttackModifierGearInventory> { monsterCharacters[5] };
+                        List<Potion?> monsterItems1 = new List<Potion?> { GetHealing10HPPotion() };
+                        List<Weapon?> monsterGear1 = new List<Weapon?>();
+                        Inventory monsterPartyInventory1 = new Inventory();
+                        monsterPartyInventory1.Potions = monsterItems1;
+                        monsterPartyInventory1.Weapons = monsterGear1;
+                        List<Potion?> monsterItems2 = new List<Potion?> { GetHealing10HPPotion() };
+                        AvailableAction stab = new AvailableAction("stab", 1, 1, ActionTypes.GEAR_ATTACK);
+                        Weapon dagger2 = new Weapon(GearTypes.WEAPON, "dagger2", WeaponTypes.DAGGER, 1, 1, stab, "dagger2");
+                        Weapon dagger3 = new Weapon(GearTypes.WEAPON, "dagger3", WeaponTypes.DAGGER, 1, 1, stab, "dagger3");
+                        List<Weapon?> monsterGear2 = new List<Weapon?>();
+                        monsterGear2.Add(dagger2);
+                        monsterGear2.Add(dagger3);
+                        Inventory monsterPartyInventory2 = new Inventory();
+                        monsterPartyInventory2.Potions = monsterItems2;
+                        monsterPartyInventory2.Weapons = monsterGear2;
+                        List<Potion?> monsterItems3 = new List<Potion?> { GetHealing10HPPotion() };
+                        List<Weapon?> monsterGear3 = new List<Weapon?>();
+                        Inventory monsterPartyInventory3 = new Inventory();
+                        monsterPartyInventory3.Potions = monsterItems3;
+                        monsterPartyInventory3.Weapons = monsterGear3;
+                        List<Potion?> monsterItems4 = new List<Potion?> { GetHealing10HPPotion() };
+                        List<Weapon?> monsterGear4 = new List<Weapon?>();
+                        Inventory monsterPartyInventory4 = new Inventory();
+                        monsterPartyInventory4.Potions = monsterItems4;
+                        monsterPartyInventory4.Weapons = monsterGear4;
+                        PartyAttackModifierGearInventory monsters1 = new PartyAttackModifierGearInventory(monsterCharacters1, PartyType.Monsters, "monsters1", monsterPartyInventory1);
+                        PartyAttackModifierGearInventory monsters2 = new PartyAttackModifierGearInventory(monsterCharacters2, PartyType.Monsters, "monsters2", monsterPartyInventory2);
+                        PartyAttackModifierGearInventory monsters3 = new PartyAttackModifierGearInventory(monsterCharacters3, PartyType.Monsters, "monsters3", monsterPartyInventory3);
+                        PartyAttackModifierGearInventory monsters4 = new PartyAttackModifierGearInventory(monsterCharacters4, PartyType.Monsters, "monsters4", monsterPartyInventory4);
+                        List<PartyAttackModifierGearInventory> monsters = new List<PartyAttackModifierGearInventory> { monsters1, monsters2, monsters3, monsters4 };
+                        Battle battle = new Battle(heroes, monsters, trueProgrammer, PartyType.Heroes, playerList, playerList[0], heroes, strExpansions);
+                        GameStart(battle);
+                        break;
+                    }
                 // ..\\..\\..\\Expansions\\Games_Status.cs
                 default:
                     {
@@ -1349,6 +1410,20 @@ namespace Expansion_Attack_Modifiers_p426
                         CharacterAttackModifierGearInventory trueProgrammer = new CharacterAttackModifierGearInventory(name, heroCharacterActionTypes, 25, characterID, heroCharacterInventory, trueProgrammerAttackModifiersOffensive, attackModifiersDefensive);
                         return trueProgrammer;
                     }
+                // items, gear and attack modifiers expansions
+                case "0125":
+                // items, gear, stolen inventory and attack modifiers expansions
+                case "01235":
+                    {
+                        heroCharacterActionTypes = AddHeal10Action(2, heroCharacterActionTypes);
+                        heroCharacterActionTypes = AddEquipAction(3, heroCharacterActionTypes);
+                        Inventory heroCharacterInventory = new Inventory();
+                        List<object> heroWeaponAndAction = AddHeroWeaponAndAction(4, heroCharacterActionTypes, heroCharacterInventory, characterID, strExpansions);
+                        heroCharacterActionTypes = (List<AvailableAction>)heroWeaponAndAction[1];
+                        heroCharacterInventory = (Inventory)heroWeaponAndAction[0];
+                        CharacterAttackModifierGearInventory trueProgrammer = new CharacterAttackModifierGearInventory(name, heroCharacterActionTypes, 25, characterID, heroCharacterInventory, trueProgrammerAttackModifiersOffensive, attackModifiersDefensive);
+                        return trueProgrammer;
+                    }
                 // game's status expansion
                 // vin fletcher expansion
                 default:
@@ -1535,6 +1610,17 @@ namespace Expansion_Attack_Modifiers_p426
                         CharacterAttackModifierGearInventory skeleton = new CharacterAttackModifierGearInventory("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", monsterCharacterInventory, attackModifiersOffensive, attackModifiersDefensive);
                         return skeleton;
                     }
+                // items, gear and attack modifiers expansions
+                case "0125":
+                // items, gear, stolen inventory and attack modifiers expansions
+                case "01235":
+                    {
+                        skeletonCharacterActionTypes = AddHeal10Action(2, skeletonCharacterActionTypes);
+                        skeletonCharacterActionTypes = AddEquipAction(3, skeletonCharacterActionTypes);
+                        Inventory monsterCharacterInventory = EmptyWeaponInventory();
+                        CharacterAttackModifierGearInventory skeleton = new CharacterAttackModifierGearInventory("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", monsterCharacterInventory, attackModifiersOffensive, attackModifiersDefensive);
+                        return skeleton;
+                    }
                 // game's status expansion
                 default:
                     {
@@ -1676,6 +1762,17 @@ namespace Expansion_Attack_Modifiers_p426
                 case "0235":
                     {
                         unCodedOneCharacterActionTypes = AddEquipAction(2, unCodedOneCharacterActionTypes);
+                        Inventory unCodedOneInventory = EmptyWeaponInventory();
+                        CharacterAttackModifierGearInventory unCodedOne = new CharacterAttackModifierGearInventory("THE UNCODED ONE", unCodedOneCharacterActionTypes, 15, "unCodedOne", unCodedOneInventory, attackModifiersOffensive, attackModifiersDefensive);
+                        return unCodedOne;
+                    }
+                // items, gear and attack modifiers expansions
+                case "0125":
+                // items, gear, stolen inventory and attack modifiers expansions
+                case "01235":
+                    {
+                        unCodedOneCharacterActionTypes = AddHeal10Action(2, unCodedOneCharacterActionTypes);
+                        unCodedOneCharacterActionTypes = AddEquipAction(3, unCodedOneCharacterActionTypes);
                         Inventory unCodedOneInventory = EmptyWeaponInventory();
                         CharacterAttackModifierGearInventory unCodedOne = new CharacterAttackModifierGearInventory("THE UNCODED ONE", unCodedOneCharacterActionTypes, 15, "unCodedOne", unCodedOneInventory, attackModifiersOffensive, attackModifiersDefensive);
                         return unCodedOne;
@@ -1898,7 +1995,7 @@ namespace Expansion_Attack_Modifiers_p426
                                     // set current party type
                                     battle.CurrentPartyType = PartyType.Heroes;
                                     // set current party
-                                    battle.CurrentPartyAttackModifierGearInventory = battle.HeroesPartyAttackModifierGearinventory;
+                                    battle.CurrentPartyAttackModifierGearInventory = battle.HeroesPartyAttackModifierGearInventory;
                                     break;
                                 }
                             // game's status expansion only
@@ -1995,7 +2092,7 @@ namespace Expansion_Attack_Modifiers_p426
                                     // set current party type
                                     battle.CurrentPartyType = PartyType.Monsters;
                                     // set current party
-                                    battle.CurrentPartyAttackModifierGearInventory = battle.MonstersPartyAttackModifierGearinventory[monsterPartyID];
+                                    battle.CurrentPartyAttackModifierGearInventory = battle.MonstersPartyAttackModifierGearInventory[monsterPartyID];
                                     break;
                                 }
                             // game's status expansion only
@@ -2591,20 +2688,20 @@ namespace Expansion_Attack_Modifiers_p426
                 // gear, items, stolen inventory and attack modifier expansions
                 case "01235":
                     {
-                        for (int j = 0; j < battle.MonstersPartyAttackModifierGearinventory.Count; j++)
+                        for (int j = 0; j < battle.MonstersPartyAttackModifierGearInventory.Count; j++)
                         {
                             battle.CurrentMonsterPartyNumber = j;
-                            while (battle.MonstersPartyAttackModifierGearinventory[j].CharacterAttackModifiersGearInventory.Count > 0 && battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count > 0)
+                            while (battle.MonstersPartyAttackModifierGearInventory[j].CharacterAttackModifiersGearInventory.Count > 0 && battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.Count > 0)
                             {
                                 bool availableTargets = true;
                                 Thread.Sleep(500);
                                 SetCurrent(battle, 0, j, battle.Expansions);
-                                for (int i = 0; i < battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count; i++)
+                                for (int i = 0; i < battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.Count; i++)
                                 {
                                     Thread.Sleep(500);
-                                    battle.CurrentCharacterAttackModifierGearinventory = battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i];
-                                    gamesStatusAttackModifier.GamesStatus(battle, battle.MonstersPartyAttackModifierGearinventory[j]);
-                                    Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentCharacterAttackModifierGearinventory.Name}'s action");
+                                    battle.CurrentCharacterAttackModifierGearInventory = battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory[i];
+                                    gamesStatusAttackModifier.GamesStatus(battle, battle.MonstersPartyAttackModifierGearInventory[j]);
+                                    Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentCharacterAttackModifierGearInventory.Name}'s action");
                                     if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
                                     {
                                         CurrentHumanTurn(battle, battle.Expansions);
@@ -2613,29 +2710,29 @@ namespace Expansion_Attack_Modifiers_p426
                                     {
                                         CurrentTurn(battle, battle.Expansions);
                                     }
-                                    if (battle.MonstersPartyAttackModifierGearinventory[j].CharacterAttackModifiersGearInventory.Count == 0)
+                                    if (battle.MonstersPartyAttackModifierGearInventory[j].CharacterAttackModifiersGearInventory.Count == 0)
                                     {
                                         availableTargets = false;
-                                        i = battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count;
+                                        i = battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.Count;
                                     }
                                 }
                                 if (availableTargets == false)
                                 {
                                     if (battle.Expansions.Equals("0235") || battle.Expansions.Equals("01235")/* || battle.Expansions.Equals("0234") || battle.Expansions.Equals("01234")*/)
                                     {
-                                        stolenInventories.StolenInventory(battle, battle.MonstersPartyAttackModifierGearinventory[j], battle.CurrentPartyAttackModifierGearInventory);
+                                        stolenInventories.StolenInventory(battle, battle.MonstersPartyAttackModifierGearInventory[j], battle.CurrentPartyAttackModifierGearInventory);
                                     }
-                                    battle.MonstersPartyAttackModifierGearinventory.RemoveAt(j);
+                                    battle.MonstersPartyAttackModifierGearInventory.RemoveAt(j);
                                     j--;
                                     break;
                                 }
                                 Thread.Sleep(500);
                                 SetCurrent(battle, 1, j, battle.Expansions);
-                                for (int i = 0; i < battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.Count; i++)
+                                for (int i = 0; i < battle.MonstersPartyAttackModifierGearInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.Count; i++)
                                 {
                                     Thread.Sleep(500);
-                                    battle.CurrentCharacterAttackModifierGearinventory = battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i];
-                                    gamesStatusAttackModifier.GamesStatus(battle, battle.MonstersPartyAttackModifierGearinventory[j]);
+                                    battle.CurrentCharacterAttackModifierGearInventory = battle.MonstersPartyAttackModifierGearInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i];
+                                    gamesStatusAttackModifier.GamesStatus(battle, battle.MonstersPartyAttackModifierGearInventory[j]);
                                     Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentPartyAttackModifierGearInventory.Name}'s action");
                                     if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
                                     {
@@ -2645,29 +2742,29 @@ namespace Expansion_Attack_Modifiers_p426
                                     {
                                         CurrentTurn(battle, battle.Expansions);
                                     }
-                                    if (battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count == 0)
+                                    if (battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.Count == 0)
                                     {
                                         availableTargets = false;
-                                        i = battle.MonstersPartyAttackModifierGearinventory[j].CharacterAttackModifiersGearInventory.Count;
+                                        i = battle.MonstersPartyAttackModifierGearInventory[j].CharacterAttackModifiersGearInventory.Count;
                                     }
                                 }
                                 if (availableTargets == false)
                                 {
                                     if (battle.Expansions.Equals("0235") || battle.Expansions.Equals("01235")/* || battle.Expansions.Equals("0234") || battle.Expansions.Equals("01234")*/)
                                     {
-                                        stolenInventories.StolenInventory(battle, battle.HeroesPartyAttackModifierGearinventory, battle.CurrentPartyAttackModifierGearInventory);
+                                        stolenInventories.StolenInventory(battle, battle.HeroesPartyAttackModifierGearInventory, battle.CurrentPartyAttackModifierGearInventory);
                                     }
-                                    battle.MonstersPartyAttackModifierGearinventory.RemoveAt(j);
-                                    j--;
+                                    //battle.MonstersPartyAttackModifierGearInventory.RemoveAt(j);
+                                    //j--;
                                     break;
                                 }
                             }
                         }
-                        if (battle.MonstersPartyAttackModifierGearinventory.Count == 0)
+                        if (battle.MonstersPartyAttackModifierGearInventory.Count == 0)
                         {
                             Console.WriteLine("The Heroes won! The Uncoded One has been defeated!");
                         }
-                        else if (battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count == 0)
+                        else if (battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.Count == 0)
                         {
                             Console.WriteLine("The Heros lost! The Uncoded One prevailed!");
                         }
@@ -2820,8 +2917,8 @@ namespace Expansion_Attack_Modifiers_p426
                 // items, gear, stolen inventory and attack modifiers expansions
                 case "01235":
                     {
-                        name = battle.CurrentCharacterAttackModifierGearinventory.Name;
-                        Character currentCharacter = battle.CurrentCharacterAttackModifierGearinventory;
+                        name = battle.CurrentCharacterAttackModifierGearInventory.Name;
+                        Character currentCharacter = battle.CurrentCharacterAttackModifierGearInventory;
                         selectedAction = GetSelectedAction(currentCharacter);
                         break;
                     }
@@ -2885,8 +2982,8 @@ namespace Expansion_Attack_Modifiers_p426
                             // items, gear, stolen inventory and attack modifiers expansions
                             case "01235":
                                 {
-                                    int i = battle.CurrentCharacterAttackModifierGearinventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
-                                    doNothingAll.Actions(battle, name, battle.CurrentCharacterAttackModifierGearinventory.AvailableActions[i].ActionType, battle.Expansions);
+                                    int i = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
+                                    doNothingAll.Actions(battle, name, battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, battle.Expansions);
                                     break;
                                 }
 
@@ -3071,8 +3168,8 @@ namespace Expansion_Attack_Modifiers_p426
                                     object[] obj = GetAttackTarget(battle, strExpansions);
                                     PartyAttackModifierGearInventory p = (PartyAttackModifierGearInventory)obj[0];
                                     int selectedTarget = (int)obj[1];
-                                    int i = battle.CurrentCharacterAttackModifierGearinventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
-                                    basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifierGearinventory, p.CharacterAttackModifiersGearInventory[selectedTarget], battle.CurrentCharacterAttackModifierGearinventory.AvailableActions[i].ActionType, strExpansions);
+                                    int i = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
+                                    basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, p.CharacterAttackModifiersGearInventory[selectedTarget], battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, strExpansions);
                                     break;
                                 }
                             // game's status expansion
@@ -3237,8 +3334,8 @@ namespace Expansion_Attack_Modifiers_p426
                                 {
                                     if (battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.Count > 0)
                                     {
-                                        int i = battle.CurrentCharacterAttackModifierGearinventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
-                                        equipAll.Actions(battle, battle.CurrentCharacterAttackModifierGearinventory, battle.CurrentCharacterAttackModifierGearinventory, battle.CurrentCharacterAttackModifierGearinventory.AvailableActions[i].ActionType, strExpansions);
+                                        int i = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
+                                        equipAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, battle.CurrentCharacterAttackModifierGearInventory, battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, strExpansions);
                                     }
                                     else
                                     {
@@ -3300,8 +3397,8 @@ namespace Expansion_Attack_Modifiers_p426
                                     object[] obj = GetAttackTarget(battle, strExpansions);
                                     PartyAttackModifierGearInventory p = (PartyAttackModifierGearInventory)obj[0];
                                     int selectedTarget = (int)obj[1];
-                                    int i = battle.CurrentCharacterAttackModifierGearinventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
-                                    gearAttack.Actions(battle, battle.CurrentCharacterAttackModifierGearinventory, p.CharacterAttackModifiersGearInventory[selectedTarget], battle.CurrentCharacterAttackModifierGearinventory.AvailableActions[i].ActionType, strExpansions);
+                                    int i = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
+                                    gearAttack.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, p.CharacterAttackModifiersGearInventory[selectedTarget], battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, strExpansions);
                                     break;
                                 }
                             // gear expansion
@@ -3590,8 +3687,12 @@ namespace Expansion_Attack_Modifiers_p426
                 case "025":
                 // gear, stolen inventory and attack modifier expansions
                 case "0235":
+                // items, gear and attack modifiers expansions
+                case "0125":
+                // items, gear, stolen inventory and attack modifiers expansions
+                case "01235":
                     {
-                        name = battle.CurrentCharacterAttackModifierGearinventory.Name;
+                        name = battle.CurrentCharacterAttackModifierGearInventory.Name;
                         break;
                     }
                 // game's status only  expansion
@@ -3680,35 +3781,37 @@ namespace Expansion_Attack_Modifiers_p426
             }
             // items and attack modifiers expansions
             // items, stolen inventory and attack modifiers expansions
-            else if (((strExpansions.Equals("015") || strExpansions.Equals("0135")) && ((battle.CurrentCharacter.CurrentHP / (double)battle.CurrentCharacter.MaxHP) < 0.5)) /*||
-                ((strExpansions.Equals("012") || strExpansions.Equals("0123") && ((battle.CurrentCharacterGearInventory.CurrentHP / (double)battle.CurrentCharacterGearInventory.MaxHP) < 0.5)))*/)
+            else if (((strExpansions.Equals("015") || strExpansions.Equals("0135")) && ((battle.CurrentCharacterAttackModifier.CurrentHP / (double)battle.CurrentCharacterAttackModifier.MaxHP) < 0.5)) || ((strExpansions.Equals("0125") || strExpansions.Equals("01235")) && ((battle.CurrentCharacterAttackModifierGearInventory.CurrentHP / (double)battle.CurrentCharacterAttackModifierGearInventory.MaxHP) < 0.5)))
             {
                 // if items and attack modifiers expansions are active and the current character is below half health and the chance is less than 25%
                 // if items, stolen inventory and attack modifiers expansions are active and the current character is below half health and the chance is less than 25%
-                if ((strExpansions.Equals("015") || strExpansions.Equals("0135")) && (battle.CurrentPartyAttackModifierItemInventory.Inventory.Potions.Count > 0) && ((battle.CurrentCharacter.CurrentHP / (double)battle.CurrentCharacter.MaxHP) < 0.5) && (randDouble <= 0.25))
+                if ((strExpansions.Equals("015") || strExpansions.Equals("0135")) && (battle.CurrentPartyAttackModifierItemInventory.Inventory.Potions.Count > 0) && ((battle.CurrentCharacterAttackModifier.CurrentHP / (double)battle.CurrentCharacterAttackModifier.MaxHP) < 0.5) && (randDouble <= 0.25))
                 {
                     action = ActionTypes.HEAL;
                 }
-                //// if items and gear expansions are active and the current character is below half health and the chance is less than 25%
-                //else if ((strExpansions.Equals("012") || strExpansions.Equals("0123")) && (battle.CurrentPartyGearInventory.Inventory.Potions.Count > 0) && ((battle.CurrentCharacterGearInventory.CurrentHP / (double)battle.CurrentCharacterGearInventory.MaxHP) < 0.5) && (randDouble <= 0.25))
-                //{
-                //    action = ActionTypes.HEAL;
-                //}
-                //// if items and gear expansions are active and the current character has a gear attack action
-                //else if ((strExpansions.Equals("012") || strExpansions.Equals("0123")) && battle.CurrentCharacterGearInventory.AvailableActions.Exists(x => x.ActionType == ActionTypes.GEAR_ATTACK))
-                //{
-                //    action = FindAction(battle.CurrentCharacterGearInventory, ActionTypes.GEAR_ATTACK);
-                //}
-                //// if items and gear expansions are active
-                //else if (strExpansions.Equals("012") || strExpansions.Equals("0123"))
-                //{
-                //    action = FindAction(battle.CurrentCharacterGearInventory, ActionTypes.ATTACK);
-                //}
+                // if items, gear and attack modifiers expansions are active and the current character is below half health and the chance is less than 25%
+                // if items, gear, stolen inventory and attack modifiers expansions are active and the current character is below half health and the chance is less than 25%
+                else if ((strExpansions.Equals("0125") || strExpansions.Equals("01235")) && (battle.CurrentPartyAttackModifierGearInventory.Inventory.Potions.Count > 0) && ((battle.CurrentCharacterAttackModifierGearInventory.CurrentHP / (double)battle.CurrentCharacterAttackModifierGearInventory.MaxHP) < 0.5) && (randDouble <= 0.25))
+                {
+                    action = ActionTypes.HEAL;
+                }
+                // if items, gear and attack modifiers expansions are active and the current character has a gear attack action
+                // if items, gear, stolen inventory and attack modifiers expansions are active and the current character has a gear attack action
+                else if ((strExpansions.Equals("0125") || strExpansions.Equals("01235")) && battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.Exists(x => x.ActionType == ActionTypes.GEAR_ATTACK))
+                {
+                    action = FindAction(battle.CurrentCharacterAttackModifierGearInventory, ActionTypes.GEAR_ATTACK);
+                }
+                // if items, gear and attack modifiers expansions are active
+                // if items, gear, stolen inventory and attack modifiers expansions are active
+                else if (strExpansions.Equals("0125") || strExpansions.Equals("01235"))
+                {
+                    action = FindAction(battle.CurrentCharacterAttackModifierGearInventory, ActionTypes.ATTACK);
+                }
                 // if items and attack modifiers expansions are active
                 // if items, stolen inventory and attack modifiers expansions are active
                 else if (strExpansions.Equals("015") || strExpansions.Equals("0135"))// || strExpansions.Equals("014") || strExpansions.Equals("0134"))
                 {
-                    action = FindAction(battle.CurrentCharacter, ActionTypes.ATTACK);
+                    action = FindAction(battle.CurrentCharacterAttackModifier, ActionTypes.ATTACK);
                 }
             }
             // if either gear OR gear and items expansions are active
@@ -3823,45 +3926,45 @@ namespace Expansion_Attack_Modifiers_p426
                     if (battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.Count > 0 && randDouble >= 0.5)
                     {
                         // if the current character's weapon inventory count is at least 1
-                        if (battle.CurrentCharacterAttackModifierGearinventory.CharacterInventory.Weapons.Count > 0)
+                        if (battle.CurrentCharacterAttackModifierGearInventory.CharacterInventory.Weapons.Count > 0)
                         {
                             for (int i = 0; i < battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons.Count; i++)
                             {
                                 // checks if current equiped weapon has less max damage than weapons in the party inventory
-                                if (battle.CurrentCharacterAttackModifierGearinventory.CharacterInventory.Weapons[0].MaxDamage < battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MaxDamage)
+                                if (battle.CurrentCharacterAttackModifierGearInventory.CharacterInventory.Weapons[0].MaxDamage < battle.CurrentPartyAttackModifierGearInventory.Inventory.Weapons[i].MaxDamage)
                                 {
                                     // calls the method to find the action with type GEAR_EQUIP
-                                    action = FindAction(battle.CurrentCharacterAttackModifierGearinventory, ActionTypes.GEAR_EQUIP);
+                                    action = FindAction(battle.CurrentCharacterAttackModifierGearInventory, ActionTypes.GEAR_EQUIP);
                                 }
                                 else
                                 {
                                     // calls the method to find the action with type ATTACK
-                                    action = FindAction(battle.CurrentCharacterAttackModifierGearinventory, ActionTypes.ATTACK);
+                                    action = FindAction(battle.CurrentCharacterAttackModifierGearInventory, ActionTypes.ATTACK);
                                 }
                             }
                         }
                         // if the current character's weapon inventory count is 0
                         // if the character has the action GEAR_EQUIP they use that action
-                        else if (battle.CurrentCharacterAttackModifierGearinventory.AvailableActions.Exists(x => x.ActionType == ActionTypes.GEAR_EQUIP))
+                        else if (battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.Exists(x => x.ActionType == ActionTypes.GEAR_EQUIP))
                         {
-                            action = FindAction(battle.CurrentCharacterAttackModifierGearinventory, ActionTypes.GEAR_EQUIP);
+                            action = FindAction(battle.CurrentCharacterAttackModifierGearInventory, ActionTypes.GEAR_EQUIP);
                         }
                         // otherwise the current character uses an attack
                         else
                         {
-                            action = FindAction(battle.CurrentCharacterAttackModifierGearinventory, ActionTypes.ATTACK);
+                            action = FindAction(battle.CurrentCharacterAttackModifierGearInventory, ActionTypes.ATTACK);
                         }
                     }
                     // if the party wepon inventory is not at least 1 AND the chance is not greater than 50%, the current character attacks
-                    else if (battle.CurrentCharacterAttackModifierGearinventory.AvailableActions.Exists(x => x.ActionType == ActionTypes.ATTACK))
+                    else if (battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.Exists(x => x.ActionType == ActionTypes.ATTACK))
                     {
-                        action = FindAction(battle.CurrentCharacterAttackModifierGearinventory, ActionTypes.ATTACK);
+                        action = FindAction(battle.CurrentCharacterAttackModifierGearInventory, ActionTypes.ATTACK);
                     }
                 }
                 // if the parrty weapon inventory is null the current character attacks
-                else if (battle.CurrentCharacterAttackModifierGearinventory.AvailableActions.Exists(x => x.ActionType == ActionTypes.ATTACK))
+                else if (battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.Exists(x => x.ActionType == ActionTypes.ATTACK))
                 {
-                    action = FindAction(battle.CurrentCharacterAttackModifierGearinventory, ActionTypes.ATTACK);
+                    action = FindAction(battle.CurrentCharacterAttackModifierGearInventory, ActionTypes.ATTACK);
                 }
             }
             // if neither gear or items expansions are active, the current character attacks
@@ -3974,7 +4077,7 @@ namespace Expansion_Attack_Modifiers_p426
                                 {
                                     PartyAttackModifierGearInventory p = (PartyAttackModifierGearInventory)GetOtherParty(battle, strExpansions);
                                     int randomCharacter = DetermineAttackTarget(battle, p, action, strExpansions);
-                                    attackAll.Actions(battle, battle.CurrentCharacterAttackModifierGearinventory, p.CharacterAttackModifiersGearInventory[randomCharacter], action, strExpansions);
+                                    attackAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, p.CharacterAttackModifiersGearInventory[randomCharacter], action, strExpansions);
                                     break;
                                 }
                             // only game's status expansion
@@ -4060,7 +4163,7 @@ namespace Expansion_Attack_Modifiers_p426
                             // gear, items, stolen inventory and attack modifiers expansions
                             case "01235":
                                 {
-                                    equipAll.Actions(battle, battle.CurrentCharacterAttackModifierGearinventory, battle.CurrentCharacterAttackModifierGearinventory, action, strExpansions);
+                                    equipAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, battle.CurrentCharacterAttackModifierGearInventory, action, strExpansions);
                                     break;
                                 }
                             // gear expansion
@@ -4103,7 +4206,7 @@ namespace Expansion_Attack_Modifiers_p426
                                 {
                                     PartyAttackModifierGearInventory p = (PartyAttackModifierGearInventory)GetOtherParty(battle, strExpansions);
                                     int randomCharacter = DetermineAttackTarget(battle, p, action, strExpansions);
-                                    gearAttack.Actions(battle, battle.CurrentCharacterAttackModifierGearinventory, p.CharacterAttackModifiersGearInventory[randomCharacter], action, strExpansions);
+                                    gearAttack.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, p.CharacterAttackModifiersGearInventory[randomCharacter], action, strExpansions);
                                     break;
                                 }
                             // gear expansion
@@ -4456,7 +4559,7 @@ namespace Expansion_Attack_Modifiers_p426
                     // items, gear, stolen inventory and attack modifiers expansions
                     case "01235":
                         {
-                            PartyAttackModifierGearInventory p = battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber];
+                            PartyAttackModifierGearInventory p = battle.MonstersPartyAttackModifierGearInventory[battle.CurrentMonsterPartyNumber];
                             return p;
                         }
                     // only game's status expansion
@@ -4531,7 +4634,7 @@ namespace Expansion_Attack_Modifiers_p426
                     // items, gear, stolen inventory and attack modifiers expansions
                     case "01235":
                         {
-                            PartyAttackModifierGearInventory p = battle.HeroesPartyAttackModifierGearinventory;
+                            PartyAttackModifierGearInventory p = battle.HeroesPartyAttackModifierGearInventory;
                             return p;
                         }
                     // only game's status expansion

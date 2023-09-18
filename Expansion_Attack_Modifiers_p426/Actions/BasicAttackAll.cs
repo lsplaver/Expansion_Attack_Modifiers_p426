@@ -215,17 +215,17 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                     // gear, items, stolen inventory and attack modifiers expansions
                     case "01235":
                         {
-                            for (int i = 0; i < battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.Count; i++)
+                            for (int i = 0; i < battle.MonstersPartyAttackModifierGearInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.Count; i++)
                             {
-                                if (battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
+                                if (battle.MonstersPartyAttackModifierGearInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.MonstersPartyAttackModifierGearInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
                                 {
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
                                     if (strExpansions.Equals("0235") || strExpansions.Equals("01235"))
                                     {
                                         StolenInventories stolenInventories = new StolenInventories();
-                                        stolenInventories.StolenInventory(battle, battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i], battle.CurrentPartyAttackModifierGearInventory);
+                                        stolenInventories.StolenInventory(battle, battle.MonstersPartyAttackModifierGearInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory[i], battle.CurrentPartyAttackModifierGearInventory);
                                     }
-                                    battle.MonstersPartyAttackModifierGearinventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.RemoveAt(i);
+                                    battle.MonstersPartyAttackModifierGearInventory[battle.CurrentMonsterPartyNumber].CharacterAttackModifiersGearInventory.RemoveAt(i);
                                 }
                             }
                             break;
@@ -422,17 +422,17 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                     // items, gear, stolen inventory and attack modifiers expansions
                     case "01235":
                         {
-                            for (int i = 0; i < battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.Count; i++)
+                            for (int i = 0; i < battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.Count; i++)
                             {
-                                if (battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
+                                if (battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory[i].Name.Equals(targetCharacter.Name) && battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory[i].CurrentHP == 0)
                                 {
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
                                     if (strExpansions.Equals("023") || strExpansions.Equals("0123"))
                                     {
                                         StolenInventories stolenInventories = new StolenInventories();
-                                        stolenInventories.StolenInventory(battle, battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory[i], battle.CurrentPartyAttackModifierGearInventory);
+                                        stolenInventories.StolenInventory(battle, battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory[i], battle.CurrentPartyAttackModifierGearInventory);
                                     }
-                                    battle.HeroesPartyAttackModifierGearinventory.CharacterAttackModifiersGearInventory.RemoveAt(i);
+                                    battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.RemoveAt(i);
                                 }
                             }
                             break;

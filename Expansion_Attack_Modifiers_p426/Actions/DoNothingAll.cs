@@ -55,8 +55,8 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                 // items, gear, stolen and attack modifiers inventory expansions
                 case "01235":
                     {
-                        Console.WriteLine($"It is {battle.CurrentCharacterAttackModifierGearinventory.Name}'s turn...");
-                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierGearinventory.Name} did {characterAction}\n");
+                        Console.WriteLine($"It is {battle.CurrentCharacterAttackModifierGearInventory.Name}'s turn...");
+                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierGearInventory.Name} did {characterAction}\n");
                         break;
                     }
                 // game's status expansion
