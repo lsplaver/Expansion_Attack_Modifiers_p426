@@ -177,5 +177,50 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Stolen_Inventory
                 targetParty.Inventory.Potions.Clear();
             }
         }
+
+        // method to steal the unequpped gear from defeated party
+        // gear and stolen inventory expansions
+        // gear, items and stolen inventory expansions
+        public void StolenInventory(Battle battle, PartyAttackModifierGearInventory targetParty, PartyAttackModifierGearInventory currentParty)
+        {
+            // if Items, Gear and Stolen Inventory expansions are active
+            if (battle.Expansions.Equals("01235"))
+            {
+                // only triggers if the target party has unequipped weapons
+                if (targetParty.Inventory.Weapons.Count > 0)
+                {
+                    for (int i = 0; i < targetParty.Inventory.Weapons.Count; i++)
+                    {
+                        currentParty.Inventory.Weapons.Add(targetParty.Inventory.Weapons[i]);
+                        Console.WriteLine($"The {currentParty.Name} have stolen {targetParty.Inventory.Weapons[i].Name} from {targetParty.Name}");
+                    }
+                    targetParty.Inventory.Weapons.Clear();
+                }
+                // only triggers if the target party has unused potions
+                if (targetParty.Inventory.Potions.Count > 0)
+                {
+                    for (int i = 0; i < targetParty.Inventory.Potions.Count; i++)
+                    {
+                        currentParty.Inventory.Potions.Add(targetParty.Inventory.Potions[i]);
+                        Console.WriteLine($"The {currentParty.Name} have stolen {targetParty.Inventory.Potions[i].Name} from {targetParty.Name}");
+                    }
+                    targetParty.Inventory.Potions.Clear();
+                }
+            }
+            // if only Gear and Stolen Inventory expansions are active
+            else
+            {
+                // only triggers if the target party has unequipped weapons
+                if (targetParty.Inventory.Weapons.Count > 0)
+                {
+                    for (int i = 0; i < targetParty.Inventory.Weapons.Count; i++)
+                    {
+                        currentParty.Inventory.Weapons.Add(targetParty.Inventory.Weapons[i]);
+                        Console.WriteLine($"The {currentParty.Name} have stolen {targetParty.Inventory.Weapons[i].Name} from {targetParty.Name}");
+                    }
+                    targetParty.Inventory.Weapons.Clear();
+                }
+            }
+        }
     }
 }

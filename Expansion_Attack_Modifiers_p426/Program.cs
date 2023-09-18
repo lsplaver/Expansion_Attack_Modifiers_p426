@@ -863,38 +863,40 @@ namespace Expansion_Attack_Modifiers_p426
             List<AttackModifierDefensive> stoneAmarokAttackModifiersDefensive = new List<AttackModifierDefensive> { stoneArmor };
             //AttackModifierOffensive emptyOffensive = new AttackModifierOffensive();
             List<AttackModifierOffensive> stoneAmarokAttackModifiersOffensive = new List<AttackModifierOffensive>();
-            //switch (strExpansions)
-            //{
-            //    //// items and attack modifier expansions
-            //    //case "015":
-            //    //// items, stolen inventory expansions and attack modifier expansions
-            //    //case "0135":
-            //    //    {
-            //    //        stoneAmarokCharacterActionTypes = AddHeal10Action(2, stoneAmarokCharacterActionTypes);
-            //    //        CharacterAttackModifier stoneAmarok = new CharacterAttackModifier("STONE AMAROK", stoneAmarokCharacterActionTypes, 5, $"stoneAmarok{stoneAmarokID}", stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
-            //    //        return stoneAmarok;
-            //    //    }
-            //    // gear and attack modifiers expansions 
-            //    case "025":
-            //    // gear, stolen inventory  and attack modifiers expansions
-            //    case "023":
-            //        {
+            switch (strExpansions)
+            {
+                //// items and attack modifier expansions
+                //case "015":
+                //// items, stolen inventory expansions and attack modifier expansions
+                //case "0135":
+                //    {
+                //        stoneAmarokCharacterActionTypes = AddHeal10Action(2, stoneAmarokCharacterActionTypes);
+                //        CharacterAttackModifier stoneAmarok = new CharacterAttackModifier("STONE AMAROK", stoneAmarokCharacterActionTypes, 5, $"stoneAmarok{stoneAmarokID}", stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
+                //        return stoneAmarok;
+                //    }
+                // gear, items and attack modifiers expansions
+                case "0125":
+                // gear, items, stolen inventory and attack modifiers expansions
+                case "01235":
+                    {
+                        stoneAmarokCharacterActionTypes = AddHeal10Action(2, stoneAmarokCharacterActionTypes);
+                        stoneAmarokCharacterActionTypes = AddEquipAction(3, stoneAmarokCharacterActionTypes);
+                        Inventory monsterCharacterInventory = EmptyWeaponInventory();
+                        CharacterAttackModifierGearInventory skeleton = new CharacterAttackModifierGearInventory("STONE AMAROK", stoneAmarokCharacterActionTypes, 5, $"stoneAmarok{stoneAmarokID}", monsterCharacterInventory, stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
+                        return skeleton;
+                    }
+                // gear and attack modifiers expansions 
+                //case "025":
+                // gear, stolen inventory  and attack modifiers expansions
+                //case "023":
+                default:
+                    {
+
                         stoneAmarokCharacterActionTypes = AddEquipAction(2, stoneAmarokCharacterActionTypes);
                         Inventory monsterCharacterInventory = EmptyWeaponInventory();
                         CharacterAttackModifierGearInventory stoneAmarok = new CharacterAttackModifierGearInventory("STONE AMAROK", stoneAmarokCharacterActionTypes, 5, $"stoneAmarok{stoneAmarokID}", monsterCharacterInventory, stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
                         return stoneAmarok;
-            //        }
-            //    //// gear and items expansions
-            //    //case "012":
-            //    //// gear, items and stolen inventory expansions
-            //    //case "0123":
-            //    //    {
-            //    //        skeletonCharacterActionTypes = AddHeal10Action(2, skeletonCharacterActionTypes);
-            //    //        skeletonCharacterActionTypes = AddEquipAction(3, skeletonCharacterActionTypes);
-            //    //        Inventory monsterCharacterInventory = EmptyWeaponInventory();
-            //    //        CharacterGearInventory skeleton = new CharacterGearInventory("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", monsterCharacterInventory);
-            //    //        return skeleton;
-            //    //    }
+                    }
             //    // game's status expansion
             //    // attack modifiers expansion
             //    //default:
@@ -902,7 +904,7 @@ namespace Expansion_Attack_Modifiers_p426
             //    //        CharacterAttackModifier stoneAmarok = new CharacterAttackModifier("STONE AMAROK", stoneAmarokCharacterActionTypes, 4, $"stoneAmarok{stoneAmarokID}", stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
             //    //        return stoneAmarok;
             //    //    }
-            //}
+            }
         }
         private static CharacterAttackModifier CreateStoneAmarokMonsterCharacter(int stoneAmarokID, string strExpansions)
         {
@@ -3272,6 +3274,23 @@ namespace Expansion_Attack_Modifiers_p426
                                     {
                                         int i = battle.CurrentCharacterAttackModifier.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
                                         heal10PotionAll.Actions(battle, battle.CurrentCharacterAttackModifier, battle.CurrentCharacterAttackModifier, battle.CurrentCharacterAttackModifier.AvailableActions[i].ActionType, strExpansions);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("There is no heal potion available, please select again.");
+                                        CurrentHumanTurn(battle, strExpansions);
+                                    }
+                                    break;
+                                }
+                            // items, gear and attack modifiers expansions
+                            case "0125":
+                            // items, gear, stolen inventory and attack modifiers expansions
+                            case "01235":
+                                {
+                                    if (battle.CurrentPartyAttackModifierGearInventory.Inventory.Potions.Count > 0)
+                                    {
+                                        int i = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
+                                        heal10PotionAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, battle.CurrentCharacterAttackModifierGearInventory, battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, strExpansions);
                                     }
                                     else
                                     {
