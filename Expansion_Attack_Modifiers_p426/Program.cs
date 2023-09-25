@@ -3145,7 +3145,15 @@ namespace Expansion_Attack_Modifiers_p426
                         selectedAction = GetSelectedAction(currentCharacter);
                         break;
                     }
+                // vin fletcher and attack modifiers expansions
+                case "045":
+                    {
+                        name = battle.CurrentCharacterAttackModifierHitChance.Name;
+                        selectedAction = GetSelectedAction(battle.CurrentCharacterAttackModifierHitChance);
+                        break;
+                    }
                 // game's status only expansion
+                // attack modifiers expansion
                 default:
                     {
                         name = battle.CurrentCharacter.Name;
@@ -3209,7 +3217,13 @@ namespace Expansion_Attack_Modifiers_p426
                                     doNothingAll.Actions(battle, name, battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, battle.Expansions);
                                     break;
                                 }
-
+                            // vin fletcher and attack modifiers expansions
+                            case "045":
+                                {
+                                    int i = battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                    doNothingAll.Actions(battle, name, battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances[i].ActionType, battle.Expansions);
+                                    break;
+                                }
                             // game's status only expansion
                             // items expansion
                             // items and stolen inventory expansions
@@ -3393,6 +3407,35 @@ namespace Expansion_Attack_Modifiers_p426
                                     int selectedTarget = (int)obj[1];
                                     int i = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
                                     basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, p.CharacterAttackModifiersGearInventory[selectedTarget], battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, strExpansions);
+                                    break;
+                                }
+                            // vin fletcher and attack modifiers expansions
+                            case "045":
+                                {
+                                    Party p = GetOtherParty(battle, strExpansions);
+                                    Console.WriteLine("Please select the tatget character from the following list of characters:");
+                                    for (int j = 0; j < p.CharactersAttackModifierHitChance.Count; j++)
+                                    {
+                                        Console.WriteLine($"{j}: {p.CharactersAttackModifierHitChance[j].Name}");
+                                    }
+                                    int selectedTarget = -1;
+                                    while (selectedTarget < 0 || selectedTarget >= p.CharactersAttackModifierHitChance.Count)
+                                    {
+                                        try
+                                        {
+                                            selectedTarget = Convert.ToInt32(Console.ReadLine());
+                                            if (selectedTarget < 0 || selectedTarget >= p.CharactersAttackModifierHitChance.Count)
+                                            {
+                                                Console.WriteLine($"You must select a number between 0 and {p.CharactersAttackModifierHitChance.Count - 1}");
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                        }
+                                    }
+                                    int i = battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                    basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, p.CharactersAttackModifierHitChance[selectedTarget], battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
                                     break;
                                 }
                             // game's status expansion

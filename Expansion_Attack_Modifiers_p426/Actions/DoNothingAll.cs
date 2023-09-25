@@ -59,6 +59,13 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                         Console.WriteLine($"{battle.CurrentCharacterAttackModifierGearInventory.Name} did {characterAction}\n");
                         break;
                     }
+                // vin fletcher and attack modifiers expansions
+                case "045":
+                    {
+                        Console.WriteLine($"It is {battle.CurrentCharacterAttackModifierHitChance.Name}'s turn...");
+                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierHitChance.Name} did {characterAction}\n");
+                        break;
+                    }
                 // game's status expansion
                 default:
                     {
