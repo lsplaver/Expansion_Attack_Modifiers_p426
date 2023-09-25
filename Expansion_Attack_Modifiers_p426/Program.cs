@@ -3315,6 +3315,10 @@ namespace Expansion_Attack_Modifiers_p426
                     }
                 // vin fletcher and attack modifiers expansions
                 case "045":
+                // items, vin fletcher and attack modifiers expansions
+                case "0145":
+                // items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "01345":
                     {
                         name = battle.CurrentCharacterAttackModifierHitChance.Name;
                         selectedAction = GetSelectedAction(battle.CurrentCharacterAttackModifierHitChance);
@@ -3387,6 +3391,10 @@ namespace Expansion_Attack_Modifiers_p426
                                 }
                             // vin fletcher and attack modifiers expansions
                             case "045":
+                            // items, vin fletcher and attack modifiers expansions
+                            case "0145":
+                            // items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "01345":
                                 {
                                     int i = battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
                                     doNothingAll.Actions(battle, name, battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances[i].ActionType, battle.Expansions);
@@ -3606,6 +3614,37 @@ namespace Expansion_Attack_Modifiers_p426
                                     basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, p.CharactersAttackModifierHitChance[selectedTarget], battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
                                     break;
                                 }
+                            // items, vin fletcher and attack modifiers expansions
+                            case "0145":
+                            // items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "01345":
+                                {
+                                    PartyItemInventoryHitChance p = (PartyItemInventoryHitChance)GetOtherParty(battle, strExpansions);
+                                    Console.WriteLine("Please select the tatget character from the following list of characters:");
+                                    for (int j = 0; j < p.CharactersAttackModifierHitChance.Count; j++)
+                                    {
+                                        Console.WriteLine($"{j}: {p.CharactersAttackModifierHitChance[j].Name}");
+                                    }
+                                    int selectedTarget = -1;
+                                    while (selectedTarget < 0 || selectedTarget >= p.CharactersAttackModifierHitChance.Count)
+                                    {
+                                        try
+                                        {
+                                            selectedTarget = Convert.ToInt32(Console.ReadLine());
+                                            if (selectedTarget < 0 || selectedTarget >= p.CharactersAttackModifierHitChance.Count)
+                                            {
+                                                Console.WriteLine($"You must select a number between 0 and {p.CharactersAttackModifierHitChance.Count - 1}");
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                        }
+                                    }
+                                    int i = battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                    basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, p.CharactersAttackModifierHitChance[selectedTarget], battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
+                                    break;
+                                }
                             // game's status expansion
                             // items expansion
                             // items and stolen inventory expansions
@@ -3723,6 +3762,23 @@ namespace Expansion_Attack_Modifiers_p426
                                     {
                                         int i = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
                                         heal10PotionAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, battle.CurrentCharacterAttackModifierGearInventory, battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, strExpansions);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("There is no heal potion available, please select again.");
+                                        CurrentHumanTurn(battle, strExpansions);
+                                    }
+                                    break;
+                                }
+                            // items, vin fletcher and attack modifiers expansions
+                            case "0145":
+                            // items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "01345":
+                                {
+                                    if (battle.CurrentPartyItemInventoryHitChance.Inventory.Potions.Count > 0)
+                                    {
+                                        int i = battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                        heal10PotionAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, battle.CurrentCharacterAttackModifierHitChance, battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
                                     }
                                     else
                                     {

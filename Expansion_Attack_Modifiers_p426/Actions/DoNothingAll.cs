@@ -66,6 +66,15 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                         Console.WriteLine($"{battle.CurrentCharacterAttackModifierHitChance.Name} did {characterAction}\n");
                         break;
                     }
+                // items, vin fletcher and attack modifiers expansions
+                case "0145":
+                // items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "01345":
+                    {
+                        Console.WriteLine($"It is {battle.CurrentCharacterAttackModifierHitChance.Name}'s turn...");
+                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierHitChance.Name} did {characterAction}\n");
+                        break;
+                    }
                 // game's status expansion
                 default:
                     {
