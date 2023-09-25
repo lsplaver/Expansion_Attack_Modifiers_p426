@@ -230,6 +230,19 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                             }
                             break;
                         }
+                    // vin fletcher and attack modifiers expansions
+                    case "045":
+                        {
+                            for (int i = 0; i < battle.Monsters[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance.Count; i++)
+                            {
+                                if (battle.Monsters[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance[i].Name.Equals(targetCharacter.Name) && battle.Monsters[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    battle.Monsters[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
                     // game's status expansion
                     default:
                         {
@@ -433,6 +446,19 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                                         stolenInventories.StolenInventory(battle, battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory[i], battle.CurrentPartyAttackModifierGearInventory);
                                     }
                                     battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
+                    // vin fletcher and attack modifier expansions
+                    case "045":
+                        {
+                            for (int i = 0; i < battle.Heroes.CharactersAttackModifierHitChance.Count; i++)
+                            {
+                                if (battle.Heroes.CharactersAttackModifierHitChance[i].Name.Equals(targetCharacter.Name) && battle.Heroes.CharactersAttackModifierHitChance[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    battle.Heroes.CharactersAttackModifierHitChance.RemoveAt(i);
                                 }
                             }
                             break;
@@ -690,6 +716,138 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                 DisplayResults(currentCharacter, attackName, targetCharacter, damageDealt);
             }
             DetermineStolenInventory(battle, strExpansions, targetCharacter);
+        }
+
+        public void Actions(Battle battle, CharacterAttackModifierHitChance currentCharacter, CharacterAttackModifierHitChance targetCharacter, ActionTypes characterAction, string strExpansions)
+        {
+            string attackName = "";
+            int damageDealt = 0;
+            for (int i = 0; i < currentCharacter.AvailableActionHitChances.Count; i++)
+            {
+                if (currentCharacter.AvailableActionHitChances[i].ActionType.Equals(characterAction))
+                {
+                    attackName = currentCharacter.AvailableActionHitChances[i].Name;
+                    Random randomDamage = new Random();
+                    //double hit = randomDamage.NextDouble();
+                    if (currentCharacter.AvailableActionHitChances[i].MinAmount == currentCharacter.AvailableActionHitChances[i].MaxAmount)
+                    {
+                        damageDealt = randomDamage.Next(currentCharacter.AvailableActionHitChances[i].MinAmount, currentCharacter.AvailableActionHitChances[i].MaxAmount);
+                    }
+                    else
+                    {
+                        damageDealt = randomDamage.Next(currentCharacter.AvailableActionHitChances[i].MinAmount, currentCharacter.AvailableActionHitChances[i].MaxAmount + 1);
+                    }
+                }
+            }
+            int j = -1;
+            int reducedDamageDealt = 0;
+            int increasedDamageDealt = 0;
+            bool increasedDamage = false, reducedDamage = false;
+            List<AttackModifierOffensive> attackModifierOffensives = new List<AttackModifierOffensive>();
+            List<AttackModifierDefensive> attackModifierDefensives = new List<AttackModifierDefensive>();
+            if ((currentCharacter.AttackModifiersOffensive.Count > 0) || (targetCharacter.AttackModifiersDefensive.Count > 0))
+            {
+                if (currentCharacter.AttackModifiersOffensive.Count > 0)
+                {
+                    for (int i = 0; i < currentCharacter.AttackModifiersOffensive.Count; i++)
+                    {
+                        if (currentCharacter.AttackModifiersOffensive[i].Category.Equals(AttackModifierOffensiveCategory.DR_OVERRIDE))
+                        {
+                            Random random = new Random();
+                            double drOverride = random.NextDouble();
+                            if (targetCharacter.AttackModifiersDefensive.Exists(x => x.Category == AttackModifierDefensiveCategory.DAMAGE_REDUCTION) && (drOverride >= currentCharacter.AttackModifiersOffensive[i].DROverrideChance))
+                            {
+                                //increasedDamageDealt += (damageDealt + currentCharacter.AttackModifiersOffensive[i].Amount);
+                                increasedDamageDealt = currentCharacter.AttackModifiersOffensive[i].Amount;
+                                increasedDamage = true;
+                                attackModifierOffensives.Add(currentCharacter.AttackModifiersOffensive[i]);
+                            }
+                        }
+                        //else
+                        //{
+                        //    //increasedDamageDealt += (damageDealt + currentCharacter.AttackModifiersOffensive[i].Amount);
+                        //    increasedDamage = true;
+                        //    attackModifierOffensives.Add(currentCharacter.AttackModifiersOffensive[i]);
+                        //    //increasedDamageDealt = damageDealt;
+                        //}
+                    }
+                }
+                //else
+                //{
+                //    increasedDamageDealt = damageDealt;
+                //}
+                if (targetCharacter.AttackModifiersDefensive.Count > 0)
+                {
+                    for (int i = 0; i < targetCharacter.AttackModifiersDefensive.Count; i++)
+                    {
+                        //reducedDamageDealt += /*reducedD*/damageDealt + targetCharacter.AttackModifiersDefensive[i].Amount;
+                        reducedDamageDealt = targetCharacter.AttackModifiersDefensive[i].Amount;
+                        reducedDamage = true;
+                        attackModifierDefensives.Add(targetCharacter.AttackModifiersDefensive[i]);
+                    }
+                }
+            }
+            //else
+            //{
+            //    reducedDamageDealt = damageDealt;
+            //}
+            int adjustedDamageDealt = 0;
+            if (increasedDamage && reducedDamage)
+            {
+                adjustedDamageDealt = damageDealt + increasedDamageDealt + reducedDamageDealt;
+            }
+            else if (increasedDamage)
+            {
+                adjustedDamageDealt = damageDealt + increasedDamageDealt;
+            }
+            else if (reducedDamage)
+            {
+                adjustedDamageDealt = damageDealt + reducedDamageDealt;
+            }
+            else
+            {
+                adjustedDamageDealt = damageDealt;
+            }
+            if (adjustedDamageDealt < 0)
+            {
+                adjustedDamageDealt = 0;
+            }
+            if (increasedDamage || reducedDamage)
+            {
+                DisplayResultsAttackModified(currentCharacter, attackName, targetCharacter, adjustedDamageDealt, attackModifierOffensives, attackModifierDefensives);
+            }
+            else
+            {
+                DisplayResults(currentCharacter, attackName, targetCharacter, damageDealt);
+            }
+            DetermineStolenInventory(battle, strExpansions, targetCharacter);
+        }
+
+        private void DisplayResultsAttackModified(CharacterAttackModifierHitChance currentCharacter, string attackName, CharacterAttackModifierHitChance targetCharacter, int adjustedDamageDealt, List<AttackModifierOffensive> attackModifierOffensives, List<AttackModifierDefensive> attackModifierDefensives)
+        {
+            Console.WriteLine($"It is {currentCharacter.Name}'s turn...");
+            Console.WriteLine($"{currentCharacter.Name} used {attackName} on {targetCharacter.Name}.");
+            Console.WriteLine($"{attackName} dealt {adjustedDamageDealt} to {targetCharacter.Name}.");
+            if (attackModifierOffensives.Count > 0)
+            {
+                foreach (AttackModifierOffensive a in attackModifierOffensives)
+                {
+                    Console.WriteLine($"{a.Name} changed the damage by {a.Amount} point.");
+                }
+            }
+            if (attackModifierDefensives.Count > 0)
+            {
+                foreach (AttackModifierDefensive a in attackModifierDefensives)
+                {
+                    Console.WriteLine($"{a.Name} changed the damage by {a.Amount} point.");
+                }
+            }
+            targetCharacter.CurrentHP = targetCharacter.CurrentHP - adjustedDamageDealt;
+            if (targetCharacter.CurrentHP < 0)
+            {
+                targetCharacter.CurrentHP = 0;
+            }
+            Console.WriteLine($"{targetCharacter.Name} is now at {targetCharacter.CurrentHP}/{targetCharacter.MaxHP} HP.");
         }
 
         private void DisplayResultsAttackModified(CharacterAttackModifier currentCharacter, string attackName, CharacterAttackModifier targetCharacter, int adjustedDamageDealt, List<AttackModifierOffensive> attackModifierOffensives, List<AttackModifierDefensive> attackModifierDefensives)

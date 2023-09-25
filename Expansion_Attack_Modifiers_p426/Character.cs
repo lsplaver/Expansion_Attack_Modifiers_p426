@@ -26,4 +26,11 @@ public class Character
         MaxHP = maxHP;
         CharacterID = characterID;
     }
+
+    public Character()
+    {
+        Name = "";
+        MaxHP = 0;
+        CharacterID = "";
+    }
 }

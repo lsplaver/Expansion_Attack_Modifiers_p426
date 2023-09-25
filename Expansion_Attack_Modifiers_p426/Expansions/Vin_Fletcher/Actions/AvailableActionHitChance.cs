@@ -11,7 +11,7 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Vin_Fletcher.Actions
     public class AvailableActionHitChance : AvailableAction
     {
         public double? HitChance { get; set; }
-        public AvailableActionHitChance(double? hitChance) : base()
+        public AvailableActionHitChance(/*double? hitChance*/) : base()
         {
             Name = "NOTHING";
             ActionType = ActionTypes.NOTHING;

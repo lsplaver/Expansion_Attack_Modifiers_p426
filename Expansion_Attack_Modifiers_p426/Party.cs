@@ -13,6 +13,7 @@ public class Party
     public List<CharacterGearInventory> CharactersGearInventory { get; set; }
     public List<CharacterHitChance> CharactersHitChance { get; set;  }
     public List<CharacterAttackModifier> CharactersAttackModifier { get; set; }
+    public List<CharacterAttackModifierHitChance> CharactersAttackModifierHitChance { get; set; }
 
     public Party(List<Character> characters, PartyType partyType, string name)
     {
@@ -44,6 +45,13 @@ public class Party
     public Party(List<CharacterAttackModifier> characters, PartyType partyType, string name)
     {
         CharactersAttackModifier = characters;
+        PartyType = partyType;
+        Name = name;
+    }
+
+    public Party(List<CharacterAttackModifierHitChance> characters, PartyType partyType, string name)
+    {
+        CharactersAttackModifierHitChance = characters;
         PartyType = partyType;
         Name = name;
     }

@@ -807,6 +807,30 @@ namespace Expansion_Attack_Modifiers_p426
                         break;
                     }
                 // ..\\..\\..\\Expansions\\Games_Status.cs
+                // ..\\..\\..\\Expansions\\Vin_Fletcher
+                // ..\\..\\..\\Expansions\\Attack_Modifiers
+                case "045":
+                    {
+                        // creates player list
+                        List<Player> playerList = SetPlayers();
+                        // creates hero character
+                        List<CharacterAttackModifierHitChance> characters = CreateHeroCharactersAttackModifierHitChance(strExpansions);
+                        Party heroes = new Party(characters, PartyType.Heroes, "heroes");
+                        List<CharacterAttackModifierHitChance> monsterCharacters = CreateMonsterCharactersAttackModifiersHitChance(strExpansions);
+                        List<CharacterAttackModifierHitChance> monsterCharacters1 = new List<CharacterAttackModifierHitChance> { monsterCharacters[0] };
+                        List<CharacterAttackModifierHitChance> monsterCharacters2 = new List<CharacterAttackModifierHitChance> { monsterCharacters[1], monsterCharacters[2] };
+                        List<CharacterAttackModifierHitChance> monsterCharacters3 = new List<CharacterAttackModifierHitChance> { monsterCharacters[3], monsterCharacters[4] };
+                        List<CharacterAttackModifierHitChance> monsterCharacters4 = new List<CharacterAttackModifierHitChance> { monsterCharacters[5] };
+                        Party monsters1 = new Party(monsterCharacters1, PartyType.Monsters, "monsters1");
+                        Party monsters2 = new Party(monsterCharacters2, PartyType.Monsters, "monsters2");
+                        Party monsters3 = new Party(monsterCharacters3, PartyType.Monsters, "monsters3");
+                        Party monsters4 = new Party(monsterCharacters4, PartyType.Monsters, "monsters4");
+                        List<Party> monsters = new List<Party> { monsters1, monsters2, monsters3, monsters4 };
+                        Battle battle = new Battle(heroes, monsters, characters[0], PartyType.Heroes, playerList, playerList[0], heroes, strExpansions);
+                        GameStart(battle);
+                        break;
+                    }
+                // ..\\..\\..\\Expansions\\Games_Status.cs
                 default:
                     {
                         // creates player list
@@ -850,6 +874,82 @@ namespace Expansion_Attack_Modifiers_p426
             CharacterAttackModifier unCodedOne = (CharacterAttackModifier)CreateUnCodedOne(strExpansions);
             monsterCharacters.Add(unCodedOne);
             return monsterCharacters;
+        }
+
+        private static List<CharacterAttackModifierHitChance> CreateMonsterCharactersAttackModifiersHitChance(string strExpansions)
+        {
+            int skeletonID = 1, stoneAmarokID = 1;
+            CharacterAttackModifierHitChance skeleton1 = (CharacterAttackModifierHitChance)CreateSkeletonMonsterCharacterHitChance(skeletonID, strExpansions);
+            skeletonID++;
+            List<CharacterAttackModifierHitChance> monsterCharacters = new List<CharacterAttackModifierHitChance>();
+            monsterCharacters.Add(skeleton1);
+            CharacterAttackModifierHitChance skeleton2 = (CharacterAttackModifierHitChance)CreateSkeletonMonsterCharacterHitChance(skeletonID, strExpansions);
+            skeletonID++;
+            CharacterAttackModifierHitChance skeleton3 = (CharacterAttackModifierHitChance)CreateSkeletonMonsterCharacterHitChance(skeletonID, strExpansions);
+            skeletonID++;
+            monsterCharacters.Add(skeleton2);
+            monsterCharacters.Add(skeleton3);
+            CharacterAttackModifierHitChance stoneAmarok1 = (CharacterAttackModifierHitChance)CreateStoneAmarokMonsterCharacterHitChance(stoneAmarokID, strExpansions);
+            stoneAmarokID++;
+            CharacterAttackModifierHitChance stoneAmarok2 = (CharacterAttackModifierHitChance)CreateStoneAmarokMonsterCharacterHitChance(stoneAmarokID, strExpansions);
+            monsterCharacters.Add(stoneAmarok1);
+            monsterCharacters.Add(stoneAmarok2);
+            CharacterAttackModifierHitChance unCodedOne = (CharacterAttackModifierHitChance)CreateUnCodedOneHitChance(strExpansions);
+            monsterCharacters.Add(unCodedOne);
+            return monsterCharacters;
+        }
+
+        private static CharacterAttackModifierHitChance CreateStoneAmarokMonsterCharacterHitChance(int stoneAmarokID, string strExpansions)
+        {
+            List<AvailableActionHitChance> stoneAmarokCharacterActionTypes = new List<AvailableActionHitChance>();
+            AvailableActionHitChance bite = new AvailableActionHitChance("BITE", 1, 1, ActionTypes.ATTACK, 0.5);
+            AvailableActionHitChance nothing = new AvailableActionHitChance();
+            stoneAmarokCharacterActionTypes.Insert(0, nothing);
+            stoneAmarokCharacterActionTypes.Insert(1, bite);
+            AttackModifierDefensive stoneArmor = new AttackModifierDefensive(AttackModifierType.DEFENSIVE, "STONE ARMOR", -1, AttackModifierDefensiveCategory.DAMAGE_REDUCTION);
+            List<AttackModifierDefensive> stoneAmarokAttackModifiersDefensive = new List<AttackModifierDefensive> { stoneArmor };
+            //AttackModifierOffensive emptyOffensive = new AttackModifierOffensive();
+            List<AttackModifierOffensive> stoneAmarokAttackModifiersOffensive = new List<AttackModifierOffensive>();
+            //switch (strExpansions)
+            //{
+            //    // items and attack modifier expansions
+            //    case "015":
+            //    // items, stolen inventory expansions and attack modifier expansions
+            //    case "0135":
+            //        {
+            //            stoneAmarokCharacterActionTypes = AddHeal10Action(2, stoneAmarokCharacterActionTypes);
+            //            CharacterAttackModifier stoneAmarok = new CharacterAttackModifier("STONE AMAROK", stoneAmarokCharacterActionTypes, 5, $"stoneAmarok{stoneAmarokID}", stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
+            //            return stoneAmarok;
+            //        }
+            //    //// gear expansion
+            //    //case "02":
+            //    //// gear and stolen inventory expansions
+            //    //case "023":
+            //    //    {
+            //    //        skeletonCharacterActionTypes = AddEquipAction(2, skeletonCharacterActionTypes);
+            //    //        Inventory monsterCharacterInventory = EmptyWeaponInventory();
+            //    //        CharacterGearInventory skeleton = new CharacterGearInventory("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", monsterCharacterInventory);
+            //    //        return skeleton;
+            //    //    }
+            //    //// gear and items expansions
+            //    //case "012":
+            //    //// gear, items and stolen inventory expansions
+            //    //case "0123":
+            //    //    {
+            //    //        skeletonCharacterActionTypes = AddHeal10Action(2, skeletonCharacterActionTypes);
+            //    //        skeletonCharacterActionTypes = AddEquipAction(3, skeletonCharacterActionTypes);
+            //    //        Inventory monsterCharacterInventory = EmptyWeaponInventory();
+            //    //        CharacterGearInventory skeleton = new CharacterGearInventory("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", monsterCharacterInventory);
+            //    //        return skeleton;
+            //    //    }
+            //    // game's status expansion
+            //    // attack modifiers expansion
+            //    default:
+            //        {
+                        CharacterAttackModifierHitChance stoneAmarok = new CharacterAttackModifierHitChance("STONE AMAROK", stoneAmarokCharacterActionTypes, 4, $"stoneAmarok{stoneAmarokID}", stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
+                        return stoneAmarok;
+            //        }
+            //}
         }
 
         private static CharacterAttackModifierGearInventory CreateStoneAmarokMonsterCharacterGearinventory(int stoneAmarokID, string strExpansions)
@@ -967,6 +1067,16 @@ namespace Expansion_Attack_Modifiers_p426
             return characters;
         }
 
+        private static List<CharacterAttackModifierHitChance> CreateHeroCharactersAttackModifierHitChance(string strExpansions)
+        {
+            List<CharacterAttackModifierHitChance> characters = new List<CharacterAttackModifierHitChance>();
+            CharacterAttackModifierHitChance trueProgrammer = (CharacterAttackModifierHitChance)CreateHeroCharacterHitChance(strExpansions, "trueProgrammer");
+            characters.Add(trueProgrammer);
+            CharacterAttackModifierHitChance vinFletcher = (CharacterAttackModifierHitChance)CreateHeroCharacterHitChance(strExpansions, "vinFletcher");
+            characters.Add(vinFletcher);
+            return characters;
+        }
+
         private static List<CharacterGearInventoryHitChance> CreateMonsterCharactersGearInventoryHitChance(string strExpansions)
         {
             int skeletonID = 1;
@@ -1012,9 +1122,11 @@ namespace Expansion_Attack_Modifiers_p426
         {
             List<AvailableActionHitChance> unCodedOneCharacterActionTypes = new List<AvailableActionHitChance>();
             AvailableActionHitChance unraveling = new AvailableActionHitChance("UNRAVELING", 0, 2, ActionTypes.ATTACK, 0.5);
-            AvailableActionHitChance nothing = new AvailableActionHitChance(null);
+            AvailableActionHitChance nothing = new AvailableActionHitChance(/*null*/);
             unCodedOneCharacterActionTypes.Add(nothing);
             unCodedOneCharacterActionTypes.Add(unraveling);
+            List<AttackModifierOffensive> attackModifiersOffensive = new List<AttackModifierOffensive>();
+            List<AttackModifierDefensive> attackModifiersDefensive = new List<AttackModifierDefensive>();
             switch (strExpansions)
             {
                 // items and vin fletcher expansions
@@ -1047,6 +1159,12 @@ namespace Expansion_Attack_Modifiers_p426
                         CharacterGearInventoryHitChance unCodedOne = new CharacterGearInventoryHitChance("THE UNCODED ONE", unCodedOneCharacterActionTypes, 15, "unCodedOne", unCodedOneInventory);
                         return unCodedOne;
                     }
+                // vin fletcher and attack modifiers expansions
+                case "045":
+                    {
+                        CharacterAttackModifierHitChance unCodedOne = new CharacterAttackModifierHitChance("THE UNCODED ONE", unCodedOneCharacterActionTypes, 15, "unCodedOne", attackModifiersOffensive, attackModifiersDefensive);
+                        return unCodedOne;
+                    }
                 // game's status expansion
                 // vin fletcher expansion
                 default:
@@ -1061,9 +1179,11 @@ namespace Expansion_Attack_Modifiers_p426
         {
             List<AvailableActionHitChance> skeletonCharacterActionTypes = new List<AvailableActionHitChance>();
             AvailableActionHitChance boneCrunch = new AvailableActionHitChance("BONE CRUNCH", 0, 1, ActionTypes.ATTACK, 0.5);
-            AvailableActionHitChance nothing = new AvailableActionHitChance(null);
+            AvailableActionHitChance nothing = new AvailableActionHitChance(/*null*/);
             skeletonCharacterActionTypes.Insert(0, nothing);
             skeletonCharacterActionTypes.Insert(1, boneCrunch);
+            List<AttackModifierOffensive> attackModifiersOffensive = new List<AttackModifierOffensive>();
+            List<AttackModifierDefensive> attackModifiersDefensive = new List<AttackModifierDefensive>();
             switch (strExpansions)
             {
                 // items and vin fletcher expansions
@@ -1094,6 +1214,13 @@ namespace Expansion_Attack_Modifiers_p426
                         skeletonCharacterActionTypes = AddEquipAction(3, skeletonCharacterActionTypes);
                         Inventory monsterCharacterInventory = EmptyWeaponInventoryHitChance();
                         CharacterGearInventoryHitChance skeleton = new CharacterGearInventoryHitChance("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", monsterCharacterInventory);
+                        return skeleton;
+                    }
+                // game's status expansion
+                // vin fletcher expansion
+                case "045":
+                    {
+                        CharacterAttackModifierHitChance skeleton = new CharacterAttackModifierHitChance("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", attackModifiersOffensive, attackModifiersDefensive);
                         return skeleton;
                     }
                 // game's status expansion
@@ -1167,10 +1294,13 @@ namespace Expansion_Attack_Modifiers_p426
         private static Character CreateHeroCharacterHitChance(string strExpansions, string characterID)
         {
             List<AvailableActionHitChance> heroCharacterActionTypesHitChance = new List<AvailableActionHitChance>();
-            AvailableActionHitChance nothing = new AvailableActionHitChance(null);
+            AvailableActionHitChance nothing = new AvailableActionHitChance(/*null*/);
             AvailableActionHitChance punch = new AvailableActionHitChance("PUNCH", 1, 1, ActionTypes.ATTACK, 0.5);
             heroCharacterActionTypesHitChance.Insert(0, nothing);
             heroCharacterActionTypesHitChance.Insert(1, punch);
+            AttackModifierOffensive powerAttack = new AttackModifierOffensive(AttackModifierType.OFFENSIVE, "POWER ATTACK", 1, AttackModifierOffensiveCategory.DR_OVERRIDE, 0.5);
+            List<AttackModifierOffensive> attackModifiersOffensive = new List<AttackModifierOffensive>();
+            List<AttackModifierDefensive> attackModifiersDefensive = new List<AttackModifierDefensive>();
             string name = "";
             if (characterID.Equals("trueProgrammer"))
             {
@@ -1242,6 +1372,22 @@ namespace Expansion_Attack_Modifiers_p426
                         else
                         {
                             CharacterHitChance trueProgrammer = new CharacterHitChance(name, heroCharacterActionTypesHitChance, 25, characterID);
+                            return trueProgrammer;
+                        }
+                    }
+                // vin fletcher and attack modifier expansions
+                case "045":
+                    {
+                        if (characterID.Equals("vinFletcher"))
+                        {
+                            heroCharacterActionTypesHitChance = AddQuickShotAttack(1, heroCharacterActionTypesHitChance);
+                            CharacterAttackModifierHitChance vinFletcher = new CharacterAttackModifierHitChance(name, heroCharacterActionTypesHitChance, 15, characterID, attackModifiersOffensive, attackModifiersDefensive);
+                            return vinFletcher;
+                        }
+                        else
+                        {
+                            attackModifiersOffensive.Add(powerAttack);
+                            CharacterAttackModifierHitChance trueProgrammer = new CharacterAttackModifierHitChance(name, heroCharacterActionTypesHitChance, 25, characterID, attackModifiersOffensive, attackModifiersDefensive);
                             return trueProgrammer;
                         }
                     }
@@ -2544,7 +2690,7 @@ namespace Expansion_Attack_Modifiers_p426
                                 {
                                     Thread.Sleep(500);
                                     battle.CurrentCharacterAttackModifier = battle.Heroes.CharactersAttackModifier[i];
-                                    gamesStatusAttackModifier.GamesStatus(battle, battle.Monsters[j]);
+                                    gamesStatusAttackModifier.GamesStatus(battle, battle.Monsters[j], battle.Expansions);
                                     Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentCharacterAttackModifier.Name}'s action");
                                     if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
                                     {
@@ -2572,7 +2718,7 @@ namespace Expansion_Attack_Modifiers_p426
                                 {
                                     Thread.Sleep(500);
                                     battle.CurrentCharacterAttackModifier = battle.Monsters[battle.CurrentMonsterPartyNumber].CharactersAttackModifier[i];
-                                    gamesStatusAttackModifier.GamesStatus(battle, battle.Monsters[j]);
+                                    gamesStatusAttackModifier.GamesStatus(battle, battle.Monsters[j], battle.Expansions);
                                     Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentCharacterAttackModifier.Name}'s action");
                                     if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
                                     {
@@ -2767,6 +2913,81 @@ namespace Expansion_Attack_Modifiers_p426
                             Console.WriteLine("The Heroes won! The Uncoded One has been defeated!");
                         }
                         else if (battle.HeroesPartyAttackModifierGearInventory.CharacterAttackModifiersGearInventory.Count == 0)
+                        {
+                            Console.WriteLine("The Heros lost! The Uncoded One prevailed!");
+                        }
+                        break;
+                    }
+                // vin flecther and attack modifiers expansions
+                case "045":
+                    {
+                        for (int j = 0; j < battle.Monsters.Count; j++)
+                        {
+                            battle.CurrentMonsterPartyNumber = j;
+                            while (battle.Monsters[j].CharactersAttackModifierHitChance.Count > 0 && battle.Heroes.CharactersAttackModifierHitChance.Count > 0)
+                            {
+                                bool availableTargets = true;
+                                Thread.Sleep(500);
+                                SetCurrent(battle, 0, j, battle.Expansions);
+                                for (int i = 0; i < battle.Heroes.CharactersAttackModifierHitChance.Count; i++)
+                                {
+                                    Thread.Sleep(500);
+                                    battle.CurrentCharacterAttackModifierHitChance = battle.Heroes.CharactersAttackModifierHitChance[i];
+                                    gamesStatusAttackModifier.GamesStatus(battle, battle.Monsters[j], battle.Expansions);
+                                    Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentCharacterAttackModifierHitChance.Name}'s action");
+                                    if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
+                                    {
+                                        CurrentHumanTurn(battle, battle.Expansions);
+                                    }
+                                    else
+                                    {
+                                        CurrentTurn(battle, battle.Expansions);
+                                    }
+                                    if (battle.Monsters[j].CharactersAttackModifierHitChance.Count == 0)
+                                    {
+                                        availableTargets = false;
+                                        i = battle.Heroes.CharactersAttackModifierHitChance.Count;
+                                    }
+                                }
+                                if (availableTargets == false)
+                                {
+                                    battle.Monsters.RemoveAt(j);
+                                    j--;
+                                    break;
+                                }
+                                Thread.Sleep(500);
+                                SetCurrent(battle, 1, j, battle.Expansions);
+                                for (int i = 0; i < battle.Monsters[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance.Count; i++)
+                                {
+                                    Thread.Sleep(500);
+                                    battle.CurrentCharacterAttackModifierHitChance = battle.Monsters[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance[i];
+                                    gamesStatusAttackModifier.GamesStatus(battle, battle.Monsters[j], battle.Expansions);
+                                    Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentCharacterAttackModifierHitChance.Name}'s action");
+                                    if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
+                                    {
+                                        CurrentHumanTurn(battle, battle.Expansions);
+                                    }
+                                    else
+                                    {
+                                        CurrentTurn(battle, battle.Expansions);
+                                    }
+                                    if (battle.Heroes.CharactersAttackModifierHitChance.Count == 0)
+                                    {
+                                        availableTargets = false;
+                                        i = battle.Monsters[j].CharactersAttackModifierHitChance.Count;
+                                    }
+                                }
+                                if (availableTargets == false)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        if (battle.Monsters.Count == 0)
+                        {
+                            Console.WriteLine("The Heroes won! The Uncoded One has been defeated!");
+                        }
+                        else if (battle.Heroes.CharactersAttackModifierHitChance.Count == 0)
                         {
                             Console.WriteLine("The Heros lost! The Uncoded One prevailed!");
                         }
@@ -3714,10 +3935,18 @@ namespace Expansion_Attack_Modifiers_p426
                         name = battle.CurrentCharacterAttackModifierGearInventory.Name;
                         break;
                     }
+                // vin fletcher and attack modifiers expansions
+                case "045":
+                    {
+                        name = battle.CurrentCharacterAttackModifierHitChance.Name;
+                        break;
+                    }
                 // game's status only  expansion
                 // items expansion
                 // items and stolen inventory expansions
                 // attack modifier expansions
+                // items and attack modifiers expansions
+                // items, stolen inventory and attack modifiers expansions
                 default:
                     {
                         name = battle.CurrentCharacter.Name;
@@ -3935,7 +4164,8 @@ namespace Expansion_Attack_Modifiers_p426
                     action = FindAction(battle.CurrentCharacterGearInventoryHitChance, ActionTypes.ATTACK);
                 }
             }
-            // if either gear OR gear and items expansions are active
+            // if gear expansion is active
+            // gear and items expansions are active
             else if (strExpansions.Equals("025") || strExpansions.Equals("0125") || strExpansions.Equals("0235") || strExpansions.Equals("01235"))
             {
                 // if current party weapon inventory is not null
@@ -4001,6 +4231,13 @@ namespace Expansion_Attack_Modifiers_p426
                     if (battle.CurrentCharacterGearInventoryHitChance.AvailableActionHitChances.Exists(x => x.ActionType == ActionTypes.ATTACK))
                     {
                         action = FindAction(battle.CurrentCharacterGearInventoryHitChance, ActionTypes.ATTACK);
+                    }
+                }
+                else if (strExpansions.Equals("045"))
+                {
+                    if (battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances.Exists(x => x.ActionType == ActionTypes.ATTACK))
+                    {
+                        action = FindAction(battle.CurrentCharacterAttackModifierHitChance, ActionTypes.ATTACK);
                     }
                 }
                 else
@@ -4097,6 +4334,14 @@ namespace Expansion_Attack_Modifiers_p426
                                     PartyAttackModifierGearInventory p = (PartyAttackModifierGearInventory)GetOtherParty(battle, strExpansions);
                                     int randomCharacter = DetermineAttackTarget(battle, p, action, strExpansions);
                                     attackAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, p.CharacterAttackModifiersGearInventory[randomCharacter], action, strExpansions);
+                                    break;
+                                }
+                            // vin fletcher and attack modifier expansions
+                            case "045":
+                                {
+                                    Party p = GetOtherParty(battle, strExpansions);
+                                    int randomCharacter = DetermineAttackTarget(battle, p, action, strExpansions);
+                                    attackAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, p.CharactersAttackModifierHitChance[randomCharacter], action, strExpansions);
                                     break;
                                 }
                             // only game's status expansion
@@ -4272,6 +4517,17 @@ namespace Expansion_Attack_Modifiers_p426
                         }
                         Random random = new Random();
                         int randomCharacter = random.Next(p.CharactersAttackModifier.Count);
+                        return randomCharacter;
+                    }
+                // vin fletcher and attack modifiers expansions
+                case "045":
+                    {
+                        for (int j = 0; j < p.CharactersAttackModifierHitChance.Count; j++)
+                        {
+                            Console.WriteLine($"{j}: {p.CharactersAttackModifierHitChance[j].Name}");
+                        }
+                        Random random = new Random();
+                        int randomCharacter = random.Next(p.CharactersAttackModifierHitChance.Count);
                         return randomCharacter;
                     }
                 default:
@@ -4584,6 +4840,7 @@ namespace Expansion_Attack_Modifiers_p426
                     // only game's status expansion
                     // vin fletcher expansion
                     // attack modifiers expansion
+                    // vin fletcher and attack modifiers expansions
                     default:
                         {
                             Party p = battle.Monsters[battle.CurrentMonsterPartyNumber];
@@ -4659,6 +4916,7 @@ namespace Expansion_Attack_Modifiers_p426
                     // only game's status expansion
                     // vin fletcher expansion
                     // attack modifiers expansion
+                    // vin fletcher and attack modifiers expansions
                     default:
                         {
                             Party p = battle.Heroes;

@@ -40,6 +40,7 @@ namespace Expansion_Attack_Modifiers_p426
         public List<PartyAttackModifierGearInventory> MonstersPartyAttackModifierGearInventory { get; set; }
         public CharacterAttackModifierGearInventory CurrentCharacterAttackModifierGearInventory { get; set; }
         public PartyAttackModifierGearInventory CurrentPartyAttackModifierGearInventory { get; set; }
+        public CharacterAttackModifierHitChance CurrentCharacterAttackModifierHitChance { get; set; }
 
         public Battle(Party heroes, List<Party> monsters, Character currentCharacter, PartyType currentPartyType, List<Player> players, Player currentPlayer, Party currentParty, string expansions)
         {
@@ -58,6 +59,18 @@ namespace Expansion_Attack_Modifiers_p426
             Heroes = heroes;
             Monsters = monsters;
             CurrentCharacterHitChance = currentCharacterHitChance;
+            CurrentPartyType = currentPartyType;
+            Players = players;
+            CurrentPlayer = currentPlayer;
+            CurrentParty = currentParty;
+            Expansions = expansions;
+        }
+
+        public Battle(Party heroes, List<Party> monsters, CharacterAttackModifierHitChance currentCharacterAttackModifierHitChance, PartyType currentPartyType, List<Player> players, Player currentPlayer, Party currentParty, string expansions)
+        {
+            Heroes = heroes;
+            Monsters = monsters;
+            CurrentCharacterAttackModifierHitChance = currentCharacterAttackModifierHitChance;
             CurrentPartyType = currentPartyType;
             Players = players;
             CurrentPlayer = currentPlayer;
