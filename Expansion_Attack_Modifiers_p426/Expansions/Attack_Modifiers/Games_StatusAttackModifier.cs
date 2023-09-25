@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Expansion_Attack_Modifiers_p426.Expansions.Vin_Fletcher;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,49 +14,82 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("================================== BATTLE ==================================");
-            if (strExpansion.Equals("05"))
+            switch (strExpansion)
             {
-                foreach (Character c in battle.Heroes.CharactersAttackModifier)
-                {
-                    if (c.Name.Equals(battle.CurrentCharacterAttackModifier.Name))
+                // vin fletcher and attack modifiers expansions
+                case "045":
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        foreach (Character c in battle.Heroes.CharactersAttackModifierHitChance)
+                        {
+                            if (c.Name.Equals(battle.CurrentCharacterAttackModifierHitChance.Name))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                            }
+                            Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                        Console.WriteLine("==================================   VS   ==================================");
+                        foreach (Character c in currentMonsterParty.CharactersAttackModifierHitChance)
+                        {
+                            if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifierHitChance.CharacterID))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                            }
+                            Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                        break;
                     }
-                    Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                Console.WriteLine("==================================   VS   ==================================");
-                foreach (Character c in currentMonsterParty.CharactersAttackModifier)
-                {
-                    if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifier.CharacterID))
+                //// items, vin fletcher and attack modifiers expansions
+                //case "0145":
+                //// items, stolen inventory, vin fletcher and attack modifiers expansions
+                //case "01345":
+                //    {
+                //        foreach (Character c in battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance)
+                //        {
+                //            if (c.Name.Equals(battle.CurrentCharacterAttackModifierHitChance.Name))
+                //            {
+                //                Console.ForegroundColor = ConsoleColor.Yellow;
+                //            }
+                //            Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
+                //            Console.ForegroundColor = ConsoleColor.White;
+                //        }
+                //        Console.WriteLine("==================================   VS   ==================================");
+                //        foreach (Character c in currentMonsterParty.CharactersAttackModifierHitChance)
+                //        {
+                //            if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifierHitChance.CharacterID))
+                //            {
+                //                Console.ForegroundColor = ConsoleColor.Yellow;
+                //            }
+                //            Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
+                //            Console.ForegroundColor = ConsoleColor.White;
+                //        }
+                //        break;
+                //    }
+                // attack modifiers expansion
+                default:
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        foreach (Character c in battle.Heroes.CharactersAttackModifier)
+                        {
+                            if (c.Name.Equals(battle.CurrentCharacterAttackModifier.Name))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                            }
+                            Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                        Console.WriteLine("==================================   VS   ==================================");
+                        foreach (Character c in currentMonsterParty.CharactersAttackModifier)
+                        {
+                            if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifier.CharacterID))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                            }
+                            Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                        break;
                     }
-                    Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-            }
-            else if (strExpansion.Equals("045"))
-            {
-                foreach (Character c in battle.Heroes.CharactersAttackModifierHitChance)
-                {
-                    if (c.Name.Equals(battle.CurrentCharacterAttackModifierHitChance.Name))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                    }
-                    Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                Console.WriteLine("==================================   VS   ==================================");
-                foreach (Character c in currentMonsterParty.CharactersAttackModifierHitChance)
-                {
-                    if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifierHitChance.CharacterID))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                    }
-                    Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
             }
             Console.WriteLine("============================================================================");
         }
@@ -105,6 +139,31 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers
             foreach (Character c in currentMonsterParty.CharacterAttackModifiersGearInventory)
             {
                 if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifierGearInventory.CharacterID))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            Console.WriteLine("============================================================================");
+        }
+        public void GamesStatusHitChance(Battle battle, PartyItemInventoryHitChance currentMonsterPartyAttackModifierHitChance)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("================================== BATTLE ==================================");
+            foreach (Character c in battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance)
+            {
+                if (c.Name.Equals(battle.CurrentCharacterAttackModifierHitChance.Name))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                Console.WriteLine($"{c.Name} \t{c.CurrentHP}/{c.MaxHP}");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            Console.WriteLine("==================================   VS   ==================================");
+            foreach (Character c in currentMonsterPartyAttackModifierHitChance.CharactersAttackModifierHitChance)
+            {
+                if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifierHitChance.CharacterID))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }

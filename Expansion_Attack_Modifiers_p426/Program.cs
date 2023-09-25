@@ -831,6 +831,47 @@ namespace Expansion_Attack_Modifiers_p426
                         break;
                     }
                 // ..\\..\\..\\Expansions\\Games_Status.cs
+                // ..\\..\\..\\Expansions\\Items
+                // ..\\..\\..\\Expansions\\Vin_Fletcher
+                // ..\\..\\..\\Expansions\\Attack_Modifiers
+                case "0145":
+                // ..\\..\\..\\Expansions\\Games_Status.cs
+                // ..\\..\\..\\Expansions\\Items
+                // ..\\..\\..\\Expansions\\Stolen_Inventory
+                // ..\\..\\..\\Expansions\\Vin_Fletcher
+                // ..\\..\\..\\Expansions\\AttackModifiers
+                case "01345":
+                    {
+                        // creates player list
+                        List<Player> playerList = SetPlayers();
+                        // creates hero character
+                        List<CharacterAttackModifierHitChance> characters = CreateHeroCharactersAttackModifierHitChance(strExpansions);
+                        List<Potion?> heroItems = GetHeroPartyItems();
+                        Inventory heroPartyInventory = new Inventory(heroItems);
+                        PartyItemInventoryHitChance heroes = new PartyItemInventoryHitChance(characters, PartyType.Heroes, "Heroes", heroPartyInventory);
+                        List<CharacterAttackModifierHitChance> monsterCharacters = CreateMonsterCharactersAttackModifiersHitChance(strExpansions);
+                        List<CharacterAttackModifierHitChance> monsterCharacters1 = new List<CharacterAttackModifierHitChance> { monsterCharacters[0] };
+                        List<CharacterAttackModifierHitChance> monsterCharacters2 = new List<CharacterAttackModifierHitChance> { monsterCharacters[1], monsterCharacters[2] };
+                        List<CharacterAttackModifierHitChance> monsterCharacters3 = new List<CharacterAttackModifierHitChance> { monsterCharacters[3], monsterCharacters[4] };
+                        List<CharacterAttackModifierHitChance> monsterCharacters4 = new List<CharacterAttackModifierHitChance> { monsterCharacters[5] };
+                        List<Potion?> monsterItems1 = new List<Potion?> { GetHealing10HPPotion() };
+                        List<Potion?> monsterItems2 = new List<Potion?> { GetHealing10HPPotion() };
+                        List<Potion?> monsterItems3 = new List<Potion?> { GetHealing10HPPotion() };
+                        List<Potion?> monsterItems4 = new List<Potion?> { GetHealing10HPPotion() };
+                        Inventory monsterPartyInventory1 = new Inventory(monsterItems1);
+                        Inventory monsterPartyInventory2 = new Inventory(monsterItems2);
+                        Inventory monsterPartyInventory3 = new Inventory(monsterItems3);
+                        Inventory monsterPartyInventory4 = new Inventory(monsterItems4);
+                        PartyItemInventoryHitChance monsters1 = new PartyItemInventoryHitChance(monsterCharacters1, PartyType.Monsters, "monsters1", monsterPartyInventory1);
+                        PartyItemInventoryHitChance monsters2 = new PartyItemInventoryHitChance(monsterCharacters2, PartyType.Monsters, "monsters1", monsterPartyInventory2);
+                        PartyItemInventoryHitChance monsters3 = new PartyItemInventoryHitChance(monsterCharacters3, PartyType.Monsters, "monsters1", monsterPartyInventory3);
+                        PartyItemInventoryHitChance monsters4 = new PartyItemInventoryHitChance(monsterCharacters4, PartyType.Monsters, "monsters4", monsterPartyInventory4);
+                        List<PartyItemInventoryHitChance> monsters = new List<PartyItemInventoryHitChance> { monsters1, monsters2, monsters3, monsters4 };
+                        Battle battle = new Battle(heroes, monsters, characters[0], PartyType.Heroes, playerList, playerList[0], heroes, strExpansions);
+                        GameStart(battle);
+                        break;
+                    }
+                // ..\\..\\..\\Expansions\\Games_Status.cs
                 default:
                     {
                         // creates player list
@@ -910,17 +951,17 @@ namespace Expansion_Attack_Modifiers_p426
             List<AttackModifierDefensive> stoneAmarokAttackModifiersDefensive = new List<AttackModifierDefensive> { stoneArmor };
             //AttackModifierOffensive emptyOffensive = new AttackModifierOffensive();
             List<AttackModifierOffensive> stoneAmarokAttackModifiersOffensive = new List<AttackModifierOffensive>();
-            //switch (strExpansions)
-            //{
-            //    // items and attack modifier expansions
-            //    case "015":
-            //    // items, stolen inventory expansions and attack modifier expansions
-            //    case "0135":
-            //        {
-            //            stoneAmarokCharacterActionTypes = AddHeal10Action(2, stoneAmarokCharacterActionTypes);
-            //            CharacterAttackModifier stoneAmarok = new CharacterAttackModifier("STONE AMAROK", stoneAmarokCharacterActionTypes, 5, $"stoneAmarok{stoneAmarokID}", stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
-            //            return stoneAmarok;
-            //        }
+            switch (strExpansions)
+            {
+                // items, vin fletcher and attack modifier expansions
+                case "0145":
+                // items, stolen inventory expansions, vin fletcher and attack modifier expansions
+                case "01345":
+                    {
+                        stoneAmarokCharacterActionTypes = AddHeal10Action(2, stoneAmarokCharacterActionTypes);
+                        CharacterAttackModifierHitChance stoneAmarok = new CharacterAttackModifierHitChance("STONE AMAROK", stoneAmarokCharacterActionTypes, 5, $"stoneAmarok{stoneAmarokID}", stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
+                        return stoneAmarok;
+                    }
             //    //// gear expansion
             //    //case "02":
             //    //// gear and stolen inventory expansions
@@ -942,14 +983,14 @@ namespace Expansion_Attack_Modifiers_p426
             //    //        CharacterGearInventory skeleton = new CharacterGearInventory("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", monsterCharacterInventory);
             //    //        return skeleton;
             //    //    }
-            //    // game's status expansion
-            //    // attack modifiers expansion
-            //    default:
-            //        {
+                // game's status expansion
+                // attack modifiers expansion
+                default:
+                    {
                         CharacterAttackModifierHitChance stoneAmarok = new CharacterAttackModifierHitChance("STONE AMAROK", stoneAmarokCharacterActionTypes, 4, $"stoneAmarok{stoneAmarokID}", stoneAmarokAttackModifiersOffensive, stoneAmarokAttackModifiersDefensive);
                         return stoneAmarok;
-            //        }
-            //}
+                    }
+            }
         }
 
         private static CharacterAttackModifierGearInventory CreateStoneAmarokMonsterCharacterGearinventory(int stoneAmarokID, string strExpansions)
@@ -1165,6 +1206,15 @@ namespace Expansion_Attack_Modifiers_p426
                         CharacterAttackModifierHitChance unCodedOne = new CharacterAttackModifierHitChance("THE UNCODED ONE", unCodedOneCharacterActionTypes, 15, "unCodedOne", attackModifiersOffensive, attackModifiersDefensive);
                         return unCodedOne;
                     }
+                // items, in fletcher and attack modifiers expansions
+                case "0145":
+                // items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "01345":
+                    {
+                        unCodedOneCharacterActionTypes = AddHeal10Action(2, unCodedOneCharacterActionTypes);
+                        CharacterAttackModifierHitChance unCodedOne = new CharacterAttackModifierHitChance("THE UNCODED ONE", unCodedOneCharacterActionTypes, 15, "unCodedOne", attackModifiersOffensive, attackModifiersDefensive);
+                        return unCodedOne;
+                    }
                 // game's status expansion
                 // vin fletcher expansion
                 default:
@@ -1220,6 +1270,15 @@ namespace Expansion_Attack_Modifiers_p426
                 // vin fletcher expansion
                 case "045":
                     {
+                        CharacterAttackModifierHitChance skeleton = new CharacterAttackModifierHitChance("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", attackModifiersOffensive, attackModifiersDefensive);
+                        return skeleton;
+                    }
+                // items, vin fletcher and attack modifiers expansions
+                case "0145":
+                // items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "01345":
+                    {
+                        skeletonCharacterActionTypes = AddHeal10Action(2, skeletonCharacterActionTypes);
                         CharacterAttackModifierHitChance skeleton = new CharacterAttackModifierHitChance("SKELETON", skeletonCharacterActionTypes, 5, $"skeleton{skeletonID}", attackModifiersOffensive, attackModifiersDefensive);
                         return skeleton;
                     }
@@ -1387,6 +1446,26 @@ namespace Expansion_Attack_Modifiers_p426
                         else
                         {
                             attackModifiersOffensive.Add(powerAttack);
+                            CharacterAttackModifierHitChance trueProgrammer = new CharacterAttackModifierHitChance(name, heroCharacterActionTypesHitChance, 25, characterID, attackModifiersOffensive, attackModifiersDefensive);
+                            return trueProgrammer;
+                        }
+                    }
+                // items, vin fletcher and attack modifiers expansions
+                case "0145":
+                // items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "01345":
+                    {
+                        if (characterID.Equals("vinFletcher"))
+                        {
+                            heroCharacterActionTypesHitChance = AddQuickShotAttack(1, heroCharacterActionTypesHitChance);
+                            heroCharacterActionTypesHitChance = AddHeal10Action(2, heroCharacterActionTypesHitChance);
+                            CharacterAttackModifierHitChance vinFletcher = new CharacterAttackModifierHitChance(name, heroCharacterActionTypesHitChance, 15, characterID, attackModifiersOffensive, attackModifiersDefensive);
+                            return vinFletcher;
+                        }
+                        else
+                        {
+                            attackModifiersOffensive.Add(powerAttack);
+                            heroCharacterActionTypesHitChance = AddHeal10Action(2, heroCharacterActionTypesHitChance);
                             CharacterAttackModifierHitChance trueProgrammer = new CharacterAttackModifierHitChance(name, heroCharacterActionTypesHitChance, 25, characterID, attackModifiersOffensive, attackModifiersDefensive);
                             return trueProgrammer;
                         }
@@ -2083,6 +2162,10 @@ namespace Expansion_Attack_Modifiers_p426
                             case "014":
                             // items, stolen inventory and vin fletcher expansions
                             case "0134":
+                            // items, vin fletcher and attack modifiers expansions
+                            case "0145":
+                            // items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "01345":
                                 {
                                     // set current party type
                                     battle.CurrentPartyType = PartyType.Heroes;
@@ -2180,6 +2263,10 @@ namespace Expansion_Attack_Modifiers_p426
                             case "014":
                             // items, stolen inventory and vin fletcher expansions
                             case "0134":
+                            // items, vin fletcher and attack modifiers expansions
+                            case "0145":
+                            // items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "01345":
                                 {
                                     // set current party type
                                     battle.CurrentPartyType = PartyType.Monsters;
@@ -2988,6 +3075,87 @@ namespace Expansion_Attack_Modifiers_p426
                             Console.WriteLine("The Heroes won! The Uncoded One has been defeated!");
                         }
                         else if (battle.Heroes.CharactersAttackModifierHitChance.Count == 0)
+                        {
+                            Console.WriteLine("The Heros lost! The Uncoded One prevailed!");
+                        }
+                        break;
+                    }
+                // items, vin flecther and attack modifiers expansions
+                case "0145":
+                // items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "01345":
+                    {
+                        for (int j = 0; j < battle.MonstersItemInventoryHitChance.Count; j++)
+                        {
+                            battle.CurrentMonsterPartyNumber = j;
+                            while (battle.MonstersItemInventoryHitChance[j].CharactersAttackModifierHitChance.Count > 0 && battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance.Count > 0)
+                            {
+                                bool availableTargets = true;
+                                Thread.Sleep(500);
+                                SetCurrent(battle, 0, j, battle.Expansions);
+                                for (int i = 0; i < battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance.Count; i++)
+                                {
+                                    Thread.Sleep(500);
+                                    battle.CurrentCharacterAttackModifierHitChance = battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance[i];
+                                    gamesStatusAttackModifier.GamesStatusHitChance(battle, battle.MonstersItemInventoryHitChance[j]);
+                                    Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentCharacterAttackModifierHitChance.Name}'s action");
+                                    if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
+                                    {
+                                        CurrentHumanTurn(battle, battle.Expansions);
+                                    }
+                                    else
+                                    {
+                                        CurrentTurn(battle, battle.Expansions);
+                                    }
+                                    if (battle.MonstersItemInventoryHitChance[j].CharactersAttackModifierHitChance.Count == 0)
+                                    {
+                                        availableTargets = false;
+                                        i = battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance.Count;
+                                    }
+                                }
+                                if (availableTargets == false)
+                                {
+                                    if (battle.Expansions.Equals("01345"))
+                                    {
+                                        stolenInventories.StolenInventory(battle, battle.MonstersItemInventoryHitChance[j], battle.CurrentPartyItemInventoryHitChance);
+                                    }
+                                    battle.MonstersItemInventoryHitChance.RemoveAt(j);
+                                    j--;
+                                    break;
+                                }
+                                Thread.Sleep(500);
+                                SetCurrent(battle, 1, j, battle.Expansions);
+                                for (int i = 0; i < battle.MonstersItemInventoryHitChance[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance.Count; i++)
+                                {
+                                    Thread.Sleep(500);
+                                    battle.CurrentCharacterAttackModifierHitChance = battle.MonstersItemInventoryHitChance[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance[i];
+                                    gamesStatusAttackModifier.GamesStatusHitChance(battle, battle.MonstersItemInventoryHitChance[j]);
+                                    Console.WriteLine($"Player {battle.CurrentPlayer.Name} please select {battle.CurrentCharacterAttackModifierHitChance.Name}'s action");
+                                    if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
+                                    {
+                                        CurrentHumanTurn(battle, battle.Expansions);
+                                    }
+                                    else
+                                    {
+                                        CurrentTurn(battle, battle.Expansions);
+                                    }
+                                    if (battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance.Count == 0)
+                                    {
+                                        availableTargets = false;
+                                        i = battle.MonstersItemInventoryHitChance[j].CharactersAttackModifierHitChance.Count;
+                                    }
+                                }
+                                if (availableTargets == false)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        if (battle.MonstersItemInventoryHitChance.Count == 0)
+                        {
+                            Console.WriteLine("The Heroes won! The Uncoded One has been defeated!");
+                        }
+                        else if (battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance.Count == 0)
                         {
                             Console.WriteLine("The Heros lost! The Uncoded One prevailed!");
                         }
@@ -3980,6 +4148,10 @@ namespace Expansion_Attack_Modifiers_p426
                     }
                 // vin fletcher and attack modifiers expansions
                 case "045":
+                // items, vin fletcher and attack modifiers expansions
+                case "0145":
+                // items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "01345":
                     {
                         name = battle.CurrentCharacterAttackModifierHitChance.Name;
                         break;
@@ -4103,6 +4275,22 @@ namespace Expansion_Attack_Modifiers_p426
                 else if (strExpansions.Equals("015") || strExpansions.Equals("0135"))// || strExpansions.Equals("014") || strExpansions.Equals("0134"))
                 {
                     action = FindAction(battle.CurrentCharacterAttackModifier, ActionTypes.ATTACK);
+                }
+            }
+            // items, vin fletcher and attack modifiers expansions
+            // items, stolen inventory, vin fletcher and attack modifiers expansions
+            else if ((strExpansions.Equals("0145") || strExpansions.Equals("01345")) && ((battle.CurrentCharacterAttackModifierHitChance.CurrentHP / (double)battle.CurrentCharacterAttackModifierHitChance.MaxHP) < 0.5))
+            {
+                // if items expansion is active and the current character is below half health and the chance is less than 25%
+                if ((strExpansions.Equals("0145") || strExpansions.Equals("01345")) && (battle.CurrentPartyItemInventoryHitChance.Inventory.Potions.Count > 0) && (randDouble <= 0.25))
+                {
+                    action = ActionTypes.HEAL;
+                }
+                // items and vin fletcher expansions are active
+                // items, stolen inventory and vin fletcher expansions are active
+                else
+                {
+                    action = FindAction(battle.CurrentCharacterAttackModifierHitChance, ActionTypes.ATTACK);
                 }
             }
             // if either gear OR gear and items expansions are active
@@ -4276,7 +4464,7 @@ namespace Expansion_Attack_Modifiers_p426
                         action = FindAction(battle.CurrentCharacterGearInventoryHitChance, ActionTypes.ATTACK);
                     }
                 }
-                else if (strExpansions.Equals("045"))
+                else if (strExpansions.Equals("045") || strExpansions.Equals("0145") || strExpansions.Equals("01345"))
                 {
                     if (battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances.Exists(x => x.ActionType == ActionTypes.ATTACK))
                     {
@@ -4387,6 +4575,16 @@ namespace Expansion_Attack_Modifiers_p426
                                     attackAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, p.CharactersAttackModifierHitChance[randomCharacter], action, strExpansions);
                                     break;
                                 }
+                            // items, vin fletcher and attack modifiers expansions
+                            case "0145":
+                            // items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "01345":
+                                {
+                                    PartyItemInventoryHitChance p = (PartyItemInventoryHitChance)GetOtherParty(battle, strExpansions);
+                                    int randomCharacter = DetermineAttackTarget(battle, p, action, strExpansions);
+                                    attackAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, p.CharactersAttackModifierHitChance[randomCharacter], action, strExpansions);
+                                    break;
+                                }
                             // only game's status expansion
                             // items expansion
                             // items and stolen inventory expansions
@@ -4434,6 +4632,14 @@ namespace Expansion_Attack_Modifiers_p426
                             case "0135":
                                 {
                                     heal10PotionAll.Actions(battle, battle.CurrentCharacterAttackModifier, battle.CurrentCharacterAttackModifier, action, strExpansions);
+                                    break;
+                                }
+                            // items, vin fletcher and attack modifiers expansions
+                            case "0145":
+                            // items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "01345":
+                                {
+                                    heal10PotionAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, battle.CurrentCharacterAttackModifierHitChance, action, strExpansions);
                                     break;
                                 }
                             // items expansion
@@ -4590,12 +4796,35 @@ namespace Expansion_Attack_Modifiers_p426
         private static int DetermineAttackTarget(Battle battle, PartyItemInventoryHitChance p, ActionTypes action, string strExpansions)
         {
             Console.WriteLine("Please select the tatget character from the following list of characters:");
-            for (int j = 0; j < p.CharactersHitChance.Count; j++)
+            int randomCharacter = -1;
+            switch (strExpansions)
             {
-                Console.WriteLine($"{j}: {p.CharactersHitChance[j].Name}");
+                // items, vin fletcher and attack modifiers expansions
+                case "0145":
+                // items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "01345":
+                    {
+                        for (int j = 0; j < p.CharactersAttackModifierHitChance.Count; j++)
+                        {
+                            Console.WriteLine($"{j}: {p.CharactersAttackModifierHitChance[j].Name}");
+                        }
+                        Random random = new Random();
+                        randomCharacter = random.Next(p.CharactersAttackModifierHitChance.Count);
+                        break;
+                    }
+                // items and vin fletcher expansions
+                // items, stolen inventory and vin fletcher expansions
+                default:
+                    {
+                        for (int j = 0; j < p.CharactersHitChance.Count; j++)
+                        {
+                            Console.WriteLine($"{j}: {p.CharactersHitChance[j].Name}");
+                        }
+                        Random random = new Random();
+                        randomCharacter = random.Next(p.CharactersHitChance.Count);
+                        break;
+                    }
             }
-            Random random = new Random();
-            int randomCharacter = random.Next(p.CharactersHitChance.Count);
             return randomCharacter;
         }
 
@@ -4832,6 +5061,10 @@ namespace Expansion_Attack_Modifiers_p426
                     case "014":
                     // items, stolen inventory and vin fletcher expansions
                     case "0134":
+                    // items, vin fletcher and attack modifiers expansions
+                    case "0145":
+                    // items, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "01345":
                         {
                             PartyItemInventoryHitChance p = battle.MonstersItemInventoryHitChance[battle.CurrentMonsterPartyNumber];
                             return p;
@@ -4908,6 +5141,10 @@ namespace Expansion_Attack_Modifiers_p426
                     case "014":
                     // items, stolen inventory and vin fletcher expansions
                     case "0134":
+                    // items, vin fletcher and attack modifiers expansions
+                    case "0145":
+                    // items, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "01345":
                         {
                             PartyItemInventoryHitChance p = battle.HeroesItemInventoryHitChance;
                             return p;

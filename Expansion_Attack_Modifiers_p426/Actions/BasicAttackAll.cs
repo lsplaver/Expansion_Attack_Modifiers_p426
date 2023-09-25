@@ -243,6 +243,26 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                             }
                             break;
                         }
+                    // items, vin fletcher and attack modifiers expansions
+                    case "0145":
+                    // items, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "01345":
+                        {
+                            for (int i = 0; i < battle.MonstersItemInventoryHitChance[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance.Count; i++)
+                            {
+                                if (battle.MonstersItemInventoryHitChance[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance[i].Name.Equals(targetCharacter.Name) && battle.MonstersItemInventoryHitChance[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    if (strExpansions.Equals("0134"))
+                                    {
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.MonstersItemInventoryHitChance[battle.CurrentMonsterPartyNumber], battle.CurrentPartyItemInventoryHitChance);
+                                    }
+                                    battle.MonstersItemInventoryHitChance[battle.CurrentMonsterPartyNumber].CharactersAttackModifierHitChance.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
                     // game's status expansion
                     default:
                         {
@@ -459,6 +479,26 @@ namespace Expansion_Attack_Modifiers_p426.Actions
                                 {
                                     Console.WriteLine($"{targetCharacter.Name} has been defeated!");
                                     battle.Heroes.CharactersAttackModifierHitChance.RemoveAt(i);
+                                }
+                            }
+                            break;
+                        }
+                    // items, vin fletcher and attack modifiers expansions
+                    case "0145":
+                    // items, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "01345":
+                        {
+                            for (int i = 0; i < battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance.Count; i++)
+                            {
+                                if (battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance[i].Name.Equals(targetCharacter.Name) && battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance[i].CurrentHP == 0)
+                                {
+                                    Console.WriteLine($"{targetCharacter.Name} has been defeated!");
+                                    if (strExpansions.Equals("0134"))
+                                    {
+                                        StolenInventories stolenInventories = new StolenInventories();
+                                        stolenInventories.StolenInventory(battle, battle.HeroesItemInventoryHitChance, battle.CurrentPartyItemInventory);
+                                    }
+                                    battle.HeroesItemInventoryHitChance.CharactersAttackModifierHitChance.RemoveAt(i);
                                 }
                             }
                             break;
