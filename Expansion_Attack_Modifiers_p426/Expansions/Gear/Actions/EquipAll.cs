@@ -237,28 +237,62 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
             Console.WriteLine("\n");
         }
 
-        public void Actions(Battle battle, CharacterGearInventoryHitChance currentCharacterGearInventoryHitChance, CharacterGearInventoryHitChance targetCharacter, ActionTypes characterAction, string strExpansions)
+        public void Actions(Battle battle, CharacterGearInventoryHitChance currentCharacter, CharacterGearInventoryHitChance targetCharacter, ActionTypes characterAction, string strExpansions)
         {
             int x = -1, y = -1, z = -1;
-            for (int i = 0; i < currentCharacterGearInventoryHitChance.AvailableActionHitChances.Count; i++)
+            string name = "";
+            switch (strExpansions)
             {
-                if (currentCharacterGearInventoryHitChance.AvailableActionHitChances[i].ActionType.Equals(characterAction))
-                {
-                    for (int j = 0; j < battle.CurrentPartyGearInventoryHitChance.CharacterGearInventoryHitChances.Count; j++)
+                // gear, vin fletcher and attack modifiers expansions
+                case "0245":
+                // gear, items, vin fletcher and attack modifiers expansions
+                case "01245":
+                // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                case "02345":
+                // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "012345":
                     {
-                        if (battle.CurrentPartyGearInventoryHitChance.CharacterGearInventoryHitChances[j].CharacterID.Equals(currentCharacterGearInventoryHitChance.CharacterID))
+                        int k = 0, i = currentCharacter.AvailableActionHitChances.FindIndex(a => a.ActionType == characterAction);
+                        if (i >= 0)
                         {
-                            x = j;
+                            x = battle.CurrentPartyAttackModifierGearInventoryHitChance.CharactersAttackModifierGearInventoruyHitChance.FindIndex(a => a.CharacterID.Equals(currentCharacter.CharacterID));
                         }
+                        Console.WriteLine("Please select a weapon from the following list to equip.");
+                        foreach (WeaponHitChance w in battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances)
+                        {
+                            Console.WriteLine($"{k}: {w.Name}");
+                            k++;
+                        }
+                        break;
                     }
-                }
-            }
-            int k = 0;
-            Console.WriteLine("Please select a weapon from the following list to equip.");
-            foreach (Weapon w in battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances)
-            {
-                Console.WriteLine($"{k}: {w.Name}");
-                k++;
+                // gear and vin fletcher expansions
+                // gear, items and vin fletcher expansions
+                // gear, stolen inventory and vin fletcher expansions
+                // gear, items, stolen inventory and vin fletcher expansions
+                default:
+                    {
+                        for (int i = 0; i < currentCharacter.AvailableActionHitChances.Count; i++)
+                        {
+                            if (currentCharacter.AvailableActionHitChances[i].ActionType.Equals(characterAction))
+                            {
+                                for (int j = 0; j < battle.CurrentPartyGearInventoryHitChance.CharacterGearInventoryHitChances.Count; j++)
+                                {
+                                    if (battle.CurrentPartyGearInventoryHitChance.CharacterGearInventoryHitChances[j].CharacterID.Equals(currentCharacter.CharacterID))
+                                    {
+                                        x = j;
+                                    }
+                                }
+                            }
+                        }
+                        int k = 0;
+                        Console.WriteLine("Please select a weapon from the following list to equip.");
+                        foreach (Weapon w in battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances)
+                        {
+                            Console.WriteLine($"{k}: {w.Name}");
+                            k++;
+                        }
+                        break;
+                    }
             }
             if (battle.CurrentPlayer.PlayerType.Equals(PlayerType.Human))
             {
@@ -268,9 +302,35 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
                     try
                     {
                         y = Convert.ToInt32(Console.ReadLine());
-                        if (y >= 0 && y <= battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.Count)
+                        switch (strExpansions)
                         {
-                            isValid = true;
+                            // gear, vin fletcher and attack modifiers expansions
+                            case "0245":
+                            // gear, items, vin fletcher and attack modifiers expansions
+                            case "01245":
+                            // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "02345":
+                            // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "012345":
+                                {
+                                    if (y >= 0 && y <= battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances.Count)
+                                    {
+                                        isValid = true;
+                                    }
+                                    break;
+                                }
+                            // gear and vin fletcher expansions
+                            // gear, items, and vin fletcher expansions
+                            // gear, stolen inventory and vin fletcher expansions
+                            // gear, items, stolen inventory and vin fletcher expansions
+                            default:
+                                {
+                                    if (y >= 0 && y <= battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.Count)
+                                    {
+                                        isValid = true;
+                                    }
+                                    break;
+                                }
                         }
                     }
                     catch (Exception e)
@@ -281,47 +341,141 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
             }
             else
             {
-                string name = "";
                 int maxDamage = 0;
                 int minDamage = 0;
-                for (int i = 0; i < battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.Count; i++)
+                switch (strExpansions)
                 {
-                    if (battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage > maxDamage)
-                    {
-                        name = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].Name;
-                        maxDamage = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage;
-                        minDamage = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage;
-                    }
-                    else if (battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage == maxDamage)
-                    {
-                        if (battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage > minDamage)
+                    // gear, vin fletcher and attack modifiers expansions
+                    case "0245":
+                    // gear, items, vin fletcher and attack modifiers expansions
+                    case "01245":
+                    // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "02345":
+                    // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "012345":
                         {
-                            name = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].Name;
-                            maxDamage = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage;
-                            minDamage = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage;
+                            for (int i = 0; i < battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances.Count; i++)
+                            {
+                                if (battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage > maxDamage)
+                                {
+                                    name = battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].Name;
+                                    maxDamage = battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage;
+                                    minDamage = battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage;
+                                }
+                                else if (battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage == maxDamage)
+                                {
+                                    if (battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage > minDamage)
+                                    {
+                                        name = battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].Name;
+                                        maxDamage = battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage;
+                                        minDamage = battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage;
+                                    }
+                                }
+                            }
+                            y = battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances.FindIndex(x => x.Name == name);
+                            break;
                         }
-                    }
+                    // gear and vin fletcher expansions
+                    // gear, items and vin fletcher expansions
+                    // gear, stolen inventory and vin fletcher expansions
+                    // gear, items, stolen inventory and vin fletcher expansions
+                    default:
+                        {
+                            for (int i = 0; i < battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.Count; i++)
+                            {
+                                if (battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage > maxDamage)
+                                {
+                                    name = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].Name;
+                                    maxDamage = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage;
+                                    minDamage = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage;
+                                }
+                                else if (battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage == maxDamage)
+                                {
+                                    if (battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage > minDamage)
+                                    {
+                                        name = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].Name;
+                                        maxDamage = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MaxDamage;
+                                        minDamage = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[i].MinDamage;
+                                    }
+                                }
+                            }
+                            y = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.FindIndex(x => x.Name == name);
+                            break;
+                        }
                 }
-                y = battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.FindIndex(x => x.Name == name);
             }
-            Console.WriteLine($"It is {currentCharacterGearInventoryHitChance.Name}'s turn...");
-            Console.WriteLine($"{currentCharacterGearInventoryHitChance.Name} equipped {battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[y].Name}.");
-            if (currentCharacterGearInventoryHitChance.CharacterInventory.WeaponHitChances/*I.Weapons*/.Count > 0)
+            Console.WriteLine($"It is {currentCharacter.Name}'s turn...");
+            if (y >= 0)
             {
-                WeaponHitChance tempWeapon = currentCharacterGearInventoryHitChance.CharacterInventory.WeaponHitChances[0];
-                int a = currentCharacterGearInventoryHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == ActionTypes.GEAR_ATTACK);
-                currentCharacterGearInventoryHitChance.AvailableActionHitChances.RemoveAt(a);
-                currentCharacterGearInventoryHitChance.CharacterInventory.WeaponHitChances.RemoveAt(0);
-                currentCharacterGearInventoryHitChance.CharacterInventory.WeaponHitChances.Add(battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[y]);
-                currentCharacterGearInventoryHitChance.AvailableActionHitChances.Add(currentCharacterGearInventoryHitChance.CharacterInventory.WeaponHitChances[0].AvailableActionHitChance);
-                battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.RemoveAt(y);
-                battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.Add(tempWeapon);
+                Console.WriteLine($"{currentCharacter.Name} equipped {/*battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[y].N*/name}.");
+            }
+            if (currentCharacter.CharacterInventory.WeaponHitChances/*I.Weapons*/.Count > 0)
+            {
+                WeaponHitChance tempWeapon = currentCharacter.CharacterInventory.WeaponHitChances[0];
+                int a = currentCharacter.AvailableActionHitChances.FindIndex(x => x.ActionType == ActionTypes.GEAR_ATTACK);
+                currentCharacter.AvailableActionHitChances.RemoveAt(a);
+                currentCharacter.CharacterInventory.WeaponHitChances.RemoveAt(0);
+                switch (strExpansions)
+                {
+                    // gear, vin fletcher and attack modifiers expansions
+                    case "0245":
+                    // gear, items, vin fletcher and attack modifiers expansions
+                    case "01245":
+                    // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "02345":
+                    // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "012345":
+                        {
+                            currentCharacter.CharacterInventory.WeaponHitChances.Add(battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[y]);
+                            currentCharacter.AvailableActionHitChances.Add(currentCharacter.CharacterInventory.WeaponHitChances[0].AvailableActionHitChance);
+                            battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances.RemoveAt(y);
+                            battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances.Add(tempWeapon);
+                            break;
+                        }
+                    // gear and vin fletcher expansions
+                    // gear, items and vin fletcher expansions
+                    // gear, stolen inventory and vin fletcher expansions
+                    // gear, items, stolen inventory and vin fletcher expansions
+                    default:
+                        {
+                            currentCharacter.CharacterInventory.WeaponHitChances.Add(battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[y]);
+                            currentCharacter.AvailableActionHitChances.Add(currentCharacter.CharacterInventory.WeaponHitChances[0].AvailableActionHitChance);
+                            battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.RemoveAt(y);
+                            battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.Add(tempWeapon);
+                            break;
+                        }
+                }
             }
             else
             {
-                currentCharacterGearInventoryHitChance.CharacterInventory.WeaponHitChances.Add(battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[y]);
-                currentCharacterGearInventoryHitChance.AvailableActionHitChances.Add(currentCharacterGearInventoryHitChance.CharacterInventory.WeaponHitChances[0].AvailableActionHitChance);
-                battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.RemoveAt(y);
+                switch (strExpansions)
+                {
+                    // gear, vin fletcher and attack modifiers expansions
+                    case "0245":
+                    // gear, items, vin fletcher and attack modifiers expansions
+                    case "01245":
+                    // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "02345":
+                    // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
+                    case "012345":
+                        {
+                            currentCharacter.CharacterInventory.WeaponHitChances.Add(battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances[y]);
+                            currentCharacter.AvailableActionHitChances.Add(currentCharacter.CharacterInventory.WeaponHitChances[0].AvailableActionHitChance);
+                            battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances.RemoveAt(y);
+                            break;
+                        }
+                    // gear and vin fletcher expansions
+                    // gear, items and vin fletcher expansions
+                    // gear, stolen inventory and vin fletcher expansions
+                    // gear, items, stolen inventory and vin fletcher expansions
+                    default:
+                        {
+                            currentCharacter.CharacterInventory.WeaponHitChances.Add(battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances[y]);
+                            currentCharacter.AvailableActionHitChances.Add(currentCharacter.CharacterInventory.WeaponHitChances[0].AvailableActionHitChance);
+                            battle.CurrentPartyGearInventoryHitChance.Inventory.WeaponHitChances.RemoveAt(y);
+                            break;
+                        }
+                }
             }
             Console.WriteLine("\n");
         }

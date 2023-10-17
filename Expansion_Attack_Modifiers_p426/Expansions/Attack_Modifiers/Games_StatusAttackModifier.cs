@@ -172,13 +172,13 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers
             }
             Console.WriteLine("============================================================================");
         }
-        /*public void GamesStatus(Battle battle, Party currentMonsterParty)
+        public void GamesStatus(Battle battle, PartyAttackModifierGearInventoryHitChance currentMonsterPartyAttackModifierGearInventoryHitChance)
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("================================== BATTLE ==================================");
-            foreach (Character c in battle.Heroes.CharactersAttackModifier)
+            foreach (Character c in battle.HeroesPartyAttackModifierGearInventoryHitChance.CharactersAttackModifierGearInventoruyHitChance)
             {
-                if (c.Name.Equals(battle.CurrentCharacterAttackModifier.Name))
+                if (c.Name.Equals(battle.CurrentCharacterAttackModifierGearInventoryHitChance.Name))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
@@ -186,9 +186,9 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers
                 Console.ForegroundColor = ConsoleColor.White;
             }
             Console.WriteLine("==================================   VS   ==================================");
-            foreach (Character c in currentMonsterParty.CharactersAttackModifier)
+            foreach (Character c in currentMonsterPartyAttackModifierGearInventoryHitChance.CharactersAttackModifierGearInventoruyHitChance)
             {
-                if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifier.CharacterID))
+                if (c.CharacterID.Equals(battle.CurrentCharacterAttackModifierGearInventoryHitChance.CharacterID))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
@@ -196,6 +196,6 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Attack_Modifiers
                 Console.ForegroundColor = ConsoleColor.White;
             }
             Console.WriteLine("============================================================================");
-        }*/
+        }
     }
 }

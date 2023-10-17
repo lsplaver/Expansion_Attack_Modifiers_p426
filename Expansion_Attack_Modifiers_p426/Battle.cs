@@ -27,6 +27,7 @@ namespace Expansion_Attack_Modifiers_p426
         public PartyItemInventoryHitChance HeroesItemInventoryHitChance { get; set; }
         public List<PartyItemInventoryHitChance> MonstersItemInventoryHitChance { get; set; }
         public Player Player { get; set; }
+        public PartyAttackModifierGearInventoryHitChance CurrentPartyAttackModifierGearInventoryHitChance { get; set; }
         public PartyItemInventoryHitChance CurrentPartyItemInventoryHitChance { get; set; }
         public PartyGearInventoryHitChance HeroesPartyGearInventoryHitChance { get; set; }
         public List<PartyGearInventoryHitChance> MonstersPartyGearInventoryHitChances { get; set; }
@@ -41,6 +42,9 @@ namespace Expansion_Attack_Modifiers_p426
         public CharacterAttackModifierGearInventory CurrentCharacterAttackModifierGearInventory { get; set; }
         public PartyAttackModifierGearInventory CurrentPartyAttackModifierGearInventory { get; set; }
         public CharacterAttackModifierHitChance CurrentCharacterAttackModifierHitChance { get; set; }
+        public PartyAttackModifierGearInventoryHitChance HeroesPartyAttackModifierGearInventoryHitChance { get; set; }
+        public List<PartyAttackModifierGearInventoryHitChance> MonstersPartyAttackModifierGearInventoryHitChance { get; set; }
+        public CharacterAttackModifierGearInventoryHitChance CurrentCharacterAttackModifierGearInventoryHitChance { get; set; }
 
         public Battle(Party heroes, List<Party> monsters, Character currentCharacter, PartyType currentPartyType, List<Player> players, Player currentPlayer, Party currentParty, string expansions)
         {
@@ -102,51 +106,63 @@ namespace Expansion_Attack_Modifiers_p426
             Expansions = expansions;
         }
 
-        public Battle(PartyItemInventoryHitChance heroesItemInventoryHitChance, List<PartyItemInventoryHitChance> monstersItemInventoryHitChance, CharacterHitChance currentCharacterHitChance, PartyType currentPartyType, List<Player> players, Player player, PartyItemInventoryHitChance currentPartyItemInventoryHitChance, string expansions)
+        public Battle(PartyItemInventoryHitChance heroesItemInventoryHitChance, List<PartyItemInventoryHitChance> monstersItemInventoryHitChance, CharacterHitChance currentCharacterHitChance, PartyType currentPartyType, List<Player> players, Player currentPlayer, PartyItemInventoryHitChance currentPartyItemInventoryHitChance, string expansions)
         {
             HeroesItemInventoryHitChance = heroesItemInventoryHitChance;
             MonstersItemInventoryHitChance = monstersItemInventoryHitChance;
             CurrentCharacterHitChance = currentCharacterHitChance;
             CurrentPartyType = currentPartyType;
             Players = players;
-            Player = player;
+            Player = currentPlayer;
             CurrentPartyItemInventoryHitChance = currentPartyItemInventoryHitChance;
             Expansions = expansions;
         }
 
-        public Battle(PartyGearInventoryHitChance heroesGearInventoryHitChance, List<PartyGearInventoryHitChance> monstersGearInventoryHitChance, CharacterGearInventoryHitChance currentCharacterGearInventoryHitChance, PartyType currentPartyType, List<Player> players, Player player, PartyGearInventoryHitChance currentPartyGearInventoryHitChance, string expansions)
+        public Battle(PartyGearInventoryHitChance heroesGearInventoryHitChance, List<PartyGearInventoryHitChance> monstersGearInventoryHitChance, CharacterGearInventoryHitChance currentCharacterGearInventoryHitChance, PartyType currentPartyType, List<Player> players, Player currentPlayer, PartyGearInventoryHitChance currentPartyGearInventoryHitChance, string expansions)
         {
             HeroesPartyGearInventoryHitChance = heroesGearInventoryHitChance;
             MonstersPartyGearInventoryHitChances = monstersGearInventoryHitChance;
             CurrentCharacterGearInventoryHitChance = currentCharacterGearInventoryHitChance;
             CurrentPartyType = currentPartyType;
             Players = players;
-            Player = player;
+            Player = currentPlayer;
             CurrentPartyGearInventoryHitChance = currentPartyGearInventoryHitChance;
             Expansions = expansions;
         }
 
-        public Battle(PartyAttackModifierItemInventory heroesPartyAttackModifierItemInventory, List<PartyAttackModifierItemInventory> monstersPartyAttackModifierItemInventory, /*CharacterAttackModifier currentCharacterAttackModifier*/ Character currentCharacter, PartyType currentPartyType, List<Player> players, Player player, PartyAttackModifierItemInventory currentPartyAttackModifierItemInventory, string expansions)
+        public Battle(PartyAttackModifierItemInventory heroesPartyAttackModifierItemInventory, List<PartyAttackModifierItemInventory> monstersPartyAttackModifierItemInventory, /*CharacterAttackModifier currentCharacterAttackModifier*/ Character currentCharacter, PartyType currentPartyType, List<Player> players, Player currentPlayer, PartyAttackModifierItemInventory currentPartyAttackModifierItemInventory, string expansions)
         {
             HeroesPartyAttackModifierItemInventory = heroesPartyAttackModifierItemInventory;
             MonstersPartyAttackModifierItemInventory = monstersPartyAttackModifierItemInventory;
             CurrentCharacter /*CurrentCharacterAttackModifier*/ = currentCharacter /*currentCharacterAttackModifier*/;
             CurrentPartyType = currentPartyType;
             Players = players;
-            Player = player;
+            Player = currentPlayer;
             CurrentPartyAttackModifierItemInventory = currentPartyAttackModifierItemInventory;
             Expansions = expansions;
         }
 
-        public Battle(PartyAttackModifierGearInventory heroesPartyAttackModifierGearInventory, List<PartyAttackModifierGearInventory> monstersPartyAttackModifierGearinventory, CharacterAttackModifierGearInventory currentCharacterAttackModifierGearInventory, PartyType currentPartyType, List<Player> players, Player player, PartyAttackModifierGearInventory currentPartyAttackModifierGearInventory, string expansions)
+        public Battle(PartyAttackModifierGearInventory heroesPartyAttackModifierGearInventory, List<PartyAttackModifierGearInventory> monstersPartyAttackModifierGearinventory, CharacterAttackModifierGearInventory currentCharacterAttackModifierGearInventory, PartyType currentPartyType, List<Player> players, Player currentPlayer, PartyAttackModifierGearInventory currentPartyAttackModifierGearInventory, string expansions)
         {
             HeroesPartyAttackModifierGearInventory = heroesPartyAttackModifierGearInventory;
             MonstersPartyAttackModifierGearInventory = monstersPartyAttackModifierGearinventory;
             CurrentCharacterAttackModifierGearInventory = currentCharacterAttackModifierGearInventory;
             CurrentPartyType = currentPartyType;
             Players = players;
-            Player = player;
+            Player = currentPlayer;
             CurrentPartyAttackModifierGearInventory = currentPartyAttackModifierGearInventory;
+            Expansions = expansions;
+        }
+
+        public Battle(PartyAttackModifierGearInventoryHitChance heroesPartyAttackModifierGearInventoryHitChance, List<PartyAttackModifierGearInventoryHitChance> monstersPartyAttackModifierGearInventoryHitChance, CharacterAttackModifierGearInventoryHitChance currentCharacterAttackModifierGearInventoryHitChance, PartyType currentPartyType, List<Player> players, Player currentPlayer, PartyAttackModifierGearInventoryHitChance currentPartyAttackModifierGearInventoryHitChance, string expansions)
+        {
+            HeroesPartyAttackModifierGearInventoryHitChance = heroesPartyAttackModifierGearInventoryHitChance;
+            MonstersPartyAttackModifierGearInventoryHitChance = monstersPartyAttackModifierGearInventoryHitChance;
+            CurrentCharacterAttackModifierGearInventoryHitChance = currentCharacterAttackModifierGearInventoryHitChance;
+            CurrentPartyType = currentPartyType;
+            Players = players;
+            Player = currentPlayer;
+            CurrentPartyAttackModifierGearInventoryHitChance = currentPartyAttackModifierGearInventoryHitChance;
             Expansions = expansions;
         }
     }

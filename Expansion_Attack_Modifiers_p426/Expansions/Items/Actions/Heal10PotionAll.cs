@@ -196,12 +196,12 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Items.Actions
                         battle.CurrentPartyItemInventoryHitChance.Inventory.Potions.RemoveAt(potionIndex);
                         break;
                     }
-                // gear and vin fletcher expansions
-                case "024":
+                //// gear and vin fletcher expansions
+                //case "024":
                 // items, gear and vin fletcher expansions
                 case "0124":
-                // gear, stolen inventory and vin fletcher expansions
-                case "0234":
+                //// gear, stolen inventory and vin fletcher expansions
+                //case "0234":
                 // items, gear, stolen inventory and vin fletcher expansions
                 case "01234":
                     {
@@ -270,7 +270,45 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Items.Actions
                         battle.CurrentPartyItemInventoryHitChance.Inventory.Potions.RemoveAt(potionIndex);
                         break;
                     }
-
+                //// gear, vin fletcher and attack modifiers expansions
+                //case "0245":
+                // items, gear, vin fletcher and attack modifiers expansions
+                case "01245":
+                //// gear, stolen inventory, vin fletcher and attack modifiers expansions
+                //case "02345":
+                // items, gear, stolen inventory, vin fletcher and attack modifiers expansions
+                case "012345":
+                    {
+                        for (int i = 0; i < battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances.Count; i++)
+                        {
+                            if (battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].ActionType.Equals(characterAction))
+                            {
+                                healingName = battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].Name;
+                                Random randomHealing = new Random();
+                                if (battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].MinAmount == battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].MaxAmount)
+                                {
+                                    totalHealing = randomHealing.Next(battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].MinAmount, battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].MaxAmount);
+                                }
+                                else
+                                {
+                                    totalHealing = randomHealing.Next(battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].MinAmount, battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].MaxAmount + 1);
+                                }
+                            }
+                        }
+                        Console.WriteLine($"It is {battle.CurrentCharacterAttackModifierGearInventoryHitChance.Name}'s turn...");
+                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierGearInventoryHitChance.Name} used {healingName} on {battle.CurrentCharacterAttackModifierGearInventoryHitChance.Name}.");
+                        Console.WriteLine($"{healingName} heals {totalHealing} to {battle.CurrentCharacterAttackModifierGearInventoryHitChance.Name}.");
+                        battle.CurrentCharacterAttackModifierGearInventoryHitChance.CurrentHP = battle.CurrentCharacterAttackModifierGearInventoryHitChance.CurrentHP + totalHealing;
+                        if (battle.CurrentCharacterAttackModifierGearInventoryHitChance.MaxHP > 0)
+                        {
+                            battle.CurrentCharacterAttackModifierGearInventoryHitChance.CurrentHP = battle.CurrentCharacterAttackModifierGearInventoryHitChance.MaxHP;
+                        }
+                        Console.WriteLine($"{battle.CurrentCharacterAttackModifierGearInventoryHitChance.Name} is now at {battle.CurrentCharacterAttackModifierGearInventoryHitChance.CurrentHP}/{battle.CurrentCharacterAttackModifierGearInventoryHitChance.MaxHP} HP.");
+                        Console.WriteLine("\n");
+                        int potionIndex = battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.Potions.FindIndex(x => x.potionName == PotionName.HEALING_10);
+                        battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.Potions.RemoveAt(potionIndex);
+                        break;
+                    }
             }
         }
     }

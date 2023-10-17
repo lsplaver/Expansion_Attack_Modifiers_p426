@@ -11,5 +11,6 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Vin_Fletcher
         {
             CharacterGearInventoryHitChances = charactersGearInventoryHitChances;
         }
+        public PartyGearInventoryHitChance(PartyType partyType, string name, Inventory inventory) : base(partyType, name, inventory) { }
     }
 }

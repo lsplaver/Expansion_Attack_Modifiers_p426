@@ -106,7 +106,9 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Stolen_Inventory
 
         // method to steal the unequipped gear from defeated character
         // gear, stolen inventory and vin fletcher expansions
+        // gear, stolen inventory, vin fletcher and attack modifiers expansions
         // gear, items, stolen inventory and vin fletcher expansions
+        // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
         public void StolenInventory(Battle battle, CharacterGearInventoryHitChance targetCharacter, PartyGearInventoryHitChance currentParty)
         {
             // only triggers if the target character has equipped weapons
@@ -119,8 +121,10 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Stolen_Inventory
         }
 
         // method to steal the unequpped gear from defeated party
-        // gear and stolen inventory expansions
-        // gear, items and stolen inventory expansions
+        // gear, stolen inventory and vin fletcher expansions
+        // gear, stolen inventory, vin fletcher and attack modifiers expansions
+        // gear, items, stolen inventory and vin fletcher expansions
+        // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
         public void StolenInventory(Battle battle, PartyGearInventoryHitChance targetParty, PartyGearInventoryHitChance currentParty)
         {
             // if Items, Gear vin fletcher and Stolen Inventory expansions are active
