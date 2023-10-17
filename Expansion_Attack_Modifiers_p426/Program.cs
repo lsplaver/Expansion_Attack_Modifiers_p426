@@ -4098,8 +4098,23 @@ namespace Expansion_Attack_Modifiers_p426
                         selectedAction = GetSelectedAction(battle.CurrentCharacterAttackModifierHitChance);
                         break;
                     }
-                // game's status only expansion
                 // attack modifiers expansion
+                case "05":
+                    {
+                        name = battle.CurrentCharacterAttackModifier.Name;
+                        selectedAction = GetSelectedAction(battle.CurrentCharacterAttackModifier);
+                        break;
+                    }
+                // items, gear, vin fletcher and attack modifiers expansions
+                case "01245":
+                // items, gear, stolen inventory, vin fletcher and attack modifiers expansions
+                case "012345":
+                    {
+                        name = battle.CurrentCharacterAttackModifierGearInventoryHitChance.Name;
+                        selectedAction = GetSelectedAction(battle.CurrentCharacterAttackModifierGearInventoryHitChance);
+                        break;
+                    }
+                // game's status only expansion
                 default:
                     {
                         name = battle.CurrentCharacter.Name;
@@ -4172,6 +4187,15 @@ namespace Expansion_Attack_Modifiers_p426
                                 {
                                     int i = battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
                                     doNothingAll.Actions(battle, name, battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances[i].ActionType, battle.Expansions);
+                                    break;
+                                }
+                            // items, gear, vin fletcher and attack modifiers expansions
+                            case "01245":
+                            // items, gear, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "012345":
+                                {
+                                    int i = battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                    doNothingAll.Actions(battle, name, battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].ActionType, battle.Expansions);
                                     break;
                                 }
                             // game's status only expansion
@@ -4419,6 +4443,37 @@ namespace Expansion_Attack_Modifiers_p426
                                     basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifierHitChance, p.CharactersAttackModifierHitChance[selectedTarget], battle.CurrentCharacterAttackModifierHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
                                     break;
                                 }
+                            // items, gear, vin fletcher and attack modifiers expansions
+                            case "01245":
+                            // items, gear, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "012345":
+                                {
+                                    PartyAttackModifierGearInventoryHitChance p = (PartyAttackModifierGearInventoryHitChance)GetOtherParty(battle, strExpansions);
+                                    Console.WriteLine("Please select the tatget character from the following list of characters:");
+                                    for (int j = 0; j < p.CharactersAttackModifierGearInventoruyHitChance.Count; j++)
+                                    {
+                                        Console.WriteLine($"{j}: {p.CharactersAttackModifierGearInventoruyHitChance[j].Name}");
+                                    }
+                                    int selectedTarget = -1;
+                                    while (selectedTarget < 0 || selectedTarget >= p.CharactersAttackModifierGearInventoruyHitChance.Count)
+                                    {
+                                        try
+                                        {
+                                            selectedTarget = Convert.ToInt32(Console.ReadLine());
+                                            if (selectedTarget < 0 || selectedTarget >= p.CharactersAttackModifierGearInventoruyHitChance.Count)
+                                            {
+                                                Console.WriteLine($"You must select a number between 0 and {p.CharactersAttackModifierGearInventoruyHitChance.Count - 1}");
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Console.WriteLine(e.Message);
+                                        }
+                                    }
+                                    int i = battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                    basicAttackAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventoryHitChance, p.CharactersAttackModifierGearInventoruyHitChance[selectedTarget], battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
+                                    break;
+                                }
                             // game's status expansion
                             // items expansion
                             // items and stolen inventory expansions
@@ -4561,6 +4616,23 @@ namespace Expansion_Attack_Modifiers_p426
                                     }
                                     break;
                                 }
+                            // items, gear, vin fletcher and attack modifiers expansions
+                            case "01245":
+                            // items, gear, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "012345":
+                                {
+                                    if (battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.Potions.Count > 0)
+                                    {
+                                        int i = battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                        heal10PotionAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventoryHitChance, battle.CurrentCharacterAttackModifierGearInventoryHitChance, battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("There is no heal potion available, please select again.");
+                                        CurrentHumanTurn(battle, strExpansions);
+                                    }
+                                    break;
+                                }
                             // items expansion
                             default:
                                 {
@@ -4625,6 +4697,27 @@ namespace Expansion_Attack_Modifiers_p426
                                     }
                                     break;
                                 }
+                            // gear, vin fletcher and attack modifiers expansions
+                            case "0245":
+                            // gear, items, vin fletcher and attack modifiers expansions
+                            case "01245":
+                            // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "02345":
+                            // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "012345":
+                                {
+                                    if (battle.CurrentPartyAttackModifierGearInventoryHitChance.Inventory.WeaponHitChances.Count > 0)
+                                    {
+                                        int i = battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                        equipAll.Actions(battle, battle.CurrentCharacterAttackModifierGearInventoryHitChance, battle.CurrentCharacterAttackModifierGearInventoryHitChance, battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("There is no gear available to equip, please select again.");
+                                        CurrentHumanTurn(battle, strExpansions);
+                                    }
+                                    break;
+                                }
                             // gear expansion
                             // gear and items expansions
                             // gear ans stolen inventory expansions
@@ -4680,6 +4773,22 @@ namespace Expansion_Attack_Modifiers_p426
                                     int selectedTarget = (int)obj[1];
                                     int i = battle.CurrentCharacterAttackModifierGearInventory.AvailableActions.FindIndex(x => x.ActionType == selectedAction);
                                     gearAttack.Actions(battle, battle.CurrentCharacterAttackModifierGearInventory, p.CharacterAttackModifiersGearInventory[selectedTarget], battle.CurrentCharacterAttackModifierGearInventory.AvailableActions[i].ActionType, strExpansions);
+                                    break;
+                                }
+                            // gear, vin fletcher and attack modifiers expansions
+                            case "0245":
+                            // gear, items, vin fletcher and attack modifiers expansions
+                            case "01245":
+                            // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "02345":
+                            // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
+                            case "012345":
+                                {
+                                    object[] obj = GetAttackTarget(battle, strExpansions);
+                                    PartyAttackModifierGearInventoryHitChance p = (PartyAttackModifierGearInventoryHitChance)obj[0];
+                                    int selectedTarget = (int)obj[1];
+                                    int i = battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances.FindIndex(x => x.ActionType == selectedAction);
+                                    gearAttack.Actions(battle, battle.CurrentCharacterAttackModifierGearInventoryHitChance, p.CharactersAttackModifierGearInventoruyHitChance[selectedTarget], battle.CurrentCharacterAttackModifierGearInventoryHitChance.AvailableActionHitChances[i].ActionType, strExpansions);
                                     break;
                                 }
                             // gear expansion
@@ -4777,9 +4886,45 @@ namespace Expansion_Attack_Modifiers_p426
                         object[] obj = { p, selectedTarget };
                         return obj;
                     }
+                // gear, vin fletcher and attack modifiers expansions
+                case "0245":
+                // gear, items, vin fletcher and attack modifiers expansions
+                case "01245":
+                // gear, stolen inventory, vin fletcher and attack modifiers expansions
+                case "02345":
+                // gear, items, stolen inventory, vin fletcher and attack modifiers expansions
+                case "012345":
+                    {
+                        PartyAttackModifierGearInventoryHitChance p = (PartyAttackModifierGearInventoryHitChance)GetOtherParty(battle, strExpansions);
+                        Console.WriteLine("Please select the target character from the following list of characters:");
+                        for (int j = 0; j < p.CharactersAttackModifierGearInventoruyHitChance.Count; j++)
+                        {
+                            Console.WriteLine($"{j}: {p.CharactersAttackModifierGearInventoruyHitChance[j].Name}");
+                        }
+                        int selectedTarget = -1;
+                        while (selectedTarget < 0 || selectedTarget >= p.CharactersAttackModifierGearInventoruyHitChance.Count)
+                        {
+                            try
+                            {
+                                selectedTarget = Convert.ToInt32(Console.ReadLine());
+                                if (selectedTarget < 0 || selectedTarget >= p.CharactersAttackModifierGearInventoruyHitChance.Count)
+                                {
+                                    Console.WriteLine($"You must select a number between 0 and {p.CharactersAttackModifierGearInventoruyHitChance.Count - 1}");
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                Console.WriteLine($"You must select a number between 0 and {p.CharactersAttackModifierGearInventoruyHitChance.Count - 1}");
+                            }
+                        }
+                        object[] obj = { p, selectedTarget };
+                        return obj;
+                    }
                 // gear expansion
                 // gear and items expansions
                 // gear, items and stolen inventory expansions
+                // attack modifiers expansions
                 default:
                     {
                         PartyGearInventory p = (PartyGearInventory)GetOtherParty(battle, strExpansions);

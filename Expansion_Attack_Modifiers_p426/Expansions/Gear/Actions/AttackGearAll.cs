@@ -1500,6 +1500,10 @@ namespace Expansion_Attack_Modifiers_p426.Expansions.Gear.Actions
                         }
                     }
                 }
+                else
+                {
+                    increasedDamageDealt = damageDealt;
+                }
                 if (targetCharacter.AttackModifiersDefensive.Count > 0)
                 {
                     for (int i = 0; i < targetCharacter.AttackModifiersDefensive.Count; i++)
